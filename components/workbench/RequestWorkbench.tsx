@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MethodSelector from './MethodSelector';
 import UrlBar from './UrlBar';
 import KeyValueEditor from './KeyValueEditor';
@@ -15,6 +15,20 @@ export default function RequestWorkbench() {
   const dispatch = useRequestDispatch();
   const { sendRequest } = useSendRequest();
   const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'body'>('params');
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (!state.isLoading) {
+          sendRequest();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [sendRequest, state.isLoading]);
 
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">

@@ -10,7 +10,7 @@ export default function HistorySidebar() {
   const dispatch = useRequestDispatch();
 
   return (
-    <div className="flex flex-col h-full bg-white border-r border-gray-200 w-64 md:w-80 flex-shrink-0">
+    <div className="flex flex-col bg-white border-b md:border-b-0 md:border-r border-gray-200 w-full md:w-80 h-48 md:h-full flex-shrink-0 z-10 shadow-sm md:shadow-none">
       <div className="p-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
         <div className="flex items-center gap-2 text-gray-700 font-semibold">
           <History size={18} />
