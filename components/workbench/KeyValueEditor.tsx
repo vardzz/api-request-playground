@@ -1,7 +1,7 @@
 'use client';
 
 import { KeyValuePair } from '../../types';
-import { Plus, Trash2, Check } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 
 interface KeyValueEditorProps {
   items: KeyValuePair[];

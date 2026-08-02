@@ -6,12 +6,14 @@ import UrlBar from './UrlBar';
 import KeyValueEditor from './KeyValueEditor';
 import BodyEditor from './BodyEditor';
 import { useRequestState, useRequestDispatch } from '../../context/RequestContext';
+import { useSendRequest } from '../../hooks/useSendRequest';
 import { KeyValuePair } from '../../types';
-import { Send, Settings2 } from 'lucide-react';
+import { Send, Settings2, Loader2 } from 'lucide-react';
 
 export default function RequestWorkbench() {
   const state = useRequestState();
   const dispatch = useRequestDispatch();
+  const { sendRequest } = useSendRequest();
   const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'body'>('params');
 
   return (
@@ -23,11 +25,12 @@ export default function RequestWorkbench() {
           <UrlBar />
         </div>
         <button
+          onClick={sendRequest}
           className="flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={state.isLoading}
         >
-          <Send size={16} />
-          Send
+          {state.isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+          {state.isLoading ? 'Sending...' : 'Send'}
         </button>
       </div>
 
