@@ -20,7 +20,10 @@ export default function JsonViewer({ data }: JsonViewerProps) {
       const parsedTokens: React.ReactNode[] = [];
       let lastIndex = 0;
       
-      str.replace(jsonRegex, (match, p1, p2, p3, offset) => {
+      str.replace(jsonRegex, (...args) => {
+        const match = args[0];
+        const offset = args[args.length - 2] as number;
+        
         // Add preceding raw text
         if (offset > lastIndex) {
           parsedTokens.push(str.slice(lastIndex, offset));
