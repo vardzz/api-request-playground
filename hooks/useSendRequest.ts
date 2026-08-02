@@ -1,9 +1,11 @@
 import { useRequestState, useRequestDispatch } from '../context/RequestContext';
 import { calculatePayloadSize } from '../lib/http-utils';
+import { useHistory } from './useHistory';
 
 export function useSendRequest() {
   const state = useRequestState();
   const dispatch = useRequestDispatch();
+  const { addEntry } = useHistory();
 
   const sendRequest = async () => {
     const { method, url, params, headers, body } = state.request;
@@ -93,6 +95,10 @@ export function useSendRequest() {
           error: null,
         }
       });
+      
+      // Save history entry
+      addEntry(state.request, response.status, timeMs);
+      
     } catch (error) {
       // Differentiate network/CORS error vs valid HTTP error
       let errorMessage = 'An unknown error occurred';
