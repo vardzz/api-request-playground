@@ -2,6 +2,7 @@
 
 import { RequestProvider } from '../context/RequestContext';
 import RequestWorkbench from '../components/workbench/RequestWorkbench';
+import ResponsePanel from '../components/response/ResponsePanel';
 
 export default function Home() {
   return (
@@ -13,9 +14,15 @@ export default function Home() {
             <p className="text-gray-500 mt-1">AI-assisted API client with strict state management</p>
           </header>
           
-          <section>
-            <RequestWorkbench />
-          </section>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <section className="flex flex-col gap-6">
+              <RequestWorkbench />
+            </section>
+            
+            <section className="flex flex-col h-full min-h-[500px]">
+              <ResponsePanel />
+            </section>
+          </div>
         </div>
       </main>
     </RequestProvider>
