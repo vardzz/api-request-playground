@@ -15,13 +15,13 @@ export default function MetaBar({ timeMs, sizeBytes }: MetaBarProps) {
   };
 
   return (
-    <div className="flex items-center gap-4 text-sm font-medium text-gray-500">
+    <div className="flex items-center gap-4 text-xs font-medium text-zinc-400 font-mono">
       <div className="flex items-center gap-1.5">
-        <Clock size={14} className="text-gray-400" />
-        <span>{timeMs} <span className="text-xs text-gray-400">ms</span></span>
+        <Clock size={12} className="text-zinc-500" />
+        <span>{timeMs} <span className="text-[10px] text-zinc-500">ms</span></span>
       </div>
       <div className="flex items-center gap-1.5">
-        <HardDrive size={14} className="text-gray-400" />
+        <HardDrive size={12} className="text-zinc-500" />
         <span>{formatSize(sizeBytes)}</span>
       </div>
     </div>

@@ -20,16 +20,16 @@ export function calculatePayloadSize(data: unknown): number {
 
 export function getStatusColorClass(status: number): string {
   if (status >= 200 && status < 300) {
-    return 'bg-green-100 text-green-800 border-green-200';
+    return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
   }
   if (status >= 400 && status < 500) {
-    return 'bg-amber-100 text-amber-800 border-amber-200';
+    return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
   }
   if (status >= 500) {
-    return 'bg-red-100 text-red-800 border-red-200';
+    return 'bg-red-500/10 text-red-400 border border-red-500/20';
   }
   if (status >= 300 && status < 400) {
-    return 'bg-blue-100 text-blue-800 border-blue-200';
+    return 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20';
   }
-  return 'bg-gray-100 text-gray-800 border-gray-200';
+  return 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20';
 }

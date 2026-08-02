@@ -27,17 +27,17 @@ export default function JsonViewer({ data }: JsonViewerProps) {
         }
         
         // Determine token type
-        let cls = 'text-blue-600'; // number
+        let cls = 'text-amber-400'; // number
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
-            cls = 'text-purple-600 font-semibold'; // key
+            cls = 'text-cyan-400 font-medium'; // key
           } else {
-            cls = 'text-green-600'; // string
+            cls = 'text-emerald-400'; // string
           }
         } else if (/true|false/.test(match)) {
-          cls = 'text-orange-500 font-semibold'; // boolean
+          cls = 'text-amber-500 font-medium'; // boolean
         } else if (/null/.test(match)) {
-          cls = 'text-gray-500 font-bold'; // null
+          cls = 'text-zinc-500 font-bold'; // null
         }
         
         parsedTokens.push(<span key={offset} className={cls}>{match}</span>);
@@ -59,8 +59,8 @@ export default function JsonViewer({ data }: JsonViewerProps) {
   }, [data]);
 
   return (
-    <div className="bg-[#fafafa] rounded-md border border-gray-200 overflow-x-auto text-sm p-4 font-mono leading-relaxed h-full">
-      <pre className="whitespace-pre">
+    <div className="bg-[#1e1e1e] rounded-md border border-zinc-800 overflow-x-auto text-sm p-4 font-mono leading-relaxed h-full scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+      <pre className="whitespace-pre text-zinc-300">
         {isJson ? tokens : stringified}
       </pre>
     </div>

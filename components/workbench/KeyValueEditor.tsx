@@ -20,59 +20,67 @@ export default function KeyValueEditor({ items, onAdd, onUpdate, onRemove }: Key
     });
   };
 
-  return (
-    <div className="flex flex-col gap-2">
-      {items.length === 0 ? (
-        <div className="text-sm text-gray-500 py-4 text-center border border-dashed border-gray-300 rounded-md">
-          No items added yet.
-        </div>
-      ) : (
-        <div className="flex flex-col gap-2">
-          {items.map((item) => (
-            <div key={item.id} className="flex items-center gap-2">
-              <label className="flex items-center justify-center p-2 rounded cursor-pointer hover:bg-gray-100 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={item.enabled}
-                  onChange={(e) => onUpdate({ ...item, enabled: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                />
-              </label>
-              
-              <input
-                type="text"
-                placeholder="Key"
-                value={item.key}
-                onChange={(e) => onUpdate({ ...item, key: e.target.value })}
-                className="flex-1 px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
-              />
-              
-              <input
-                type="text"
-                placeholder="Value"
-                value={item.value}
-                onChange={(e) => onUpdate({ ...item, value: e.target.value })}
-                className="flex-1 px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
-              />
-              
-              <button
-                onClick={() => onRemove(item.id)}
-                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
-                title="Remove row"
-              >
-                <Trash2 size={16} />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-      
-      <div className="mt-2">
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-8 bg-zinc-900/50 rounded-lg border border-dashed border-zinc-800">
+        <p className="text-sm text-zinc-500 mb-3">No items added yet.</p>
         <button
           onClick={handleAdd}
-          className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-md transition-colors"
         >
           <Plus size={16} />
+          Add Item
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {items.map((item) => (
+        <div key={item.id} className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={item.enabled}
+            onChange={(e) => onUpdate({ ...item, enabled: e.target.checked })}
+            className="w-4 h-4 rounded border-zinc-700 bg-zinc-900 text-indigo-500 focus:ring-indigo-500/50 focus:ring-offset-zinc-950"
+            title="Enable/Disable"
+          />
+          
+          <input
+            type="text"
+            value={item.key}
+            onChange={(e) => onUpdate({ ...item, key: e.target.value })}
+            placeholder="Key"
+            className="flex-1 bg-zinc-900 border border-zinc-800 focus:border-indigo-500 rounded px-3 py-1.5 text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors font-mono"
+            spellCheck={false}
+          />
+          
+          <input
+            type="text"
+            value={item.value}
+            onChange={(e) => onUpdate({ ...item, value: e.target.value })}
+            placeholder="Value"
+            className="flex-1 bg-zinc-900 border border-zinc-800 focus:border-indigo-500 rounded px-3 py-1.5 text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors font-mono"
+            spellCheck={false}
+          />
+          
+          <button
+            onClick={() => onRemove(item.id)}
+            className="p-1.5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
+            title="Remove item"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+      ))}
+      
+      <div className="pt-2">
+        <button
+          onClick={handleAdd}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-zinc-400 hover:text-indigo-400 hover:bg-zinc-900 rounded transition-colors"
+        >
+          <Plus size={14} />
           Add Row
         </button>
       </div>
