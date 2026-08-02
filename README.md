@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# API Request Playground
 
-## Getting Started
+> **A robust, locally-hosted Postman alternative built to explore AI-assisted development paradigms and modern React architecture.**
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![React](https://img.shields.io/badge/React-18-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38bdf8)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 📖 Overview
+
+The **API Request Playground** is a lightweight, responsive client for crafting, executing, and analyzing HTTP requests directly from the browser. It features a complete `GET/POST/PUT/DELETE/PATCH` builder, dynamic headers and query parameters, live JSON validation, and a syntax-highlighted response visualizer.
+
+This project was built as an academic assignment to showcase the nuances of **AI-Assisted Development**. Instead of letting an AI generate a naive "throwaway" application, this project was carefully scaffolded over 7 phases, heavily documenting the AI's technical flaws (e.g., array mutations, hydration errors, SSR mismatches) and the manual software engineering required to refactor those flaws into production-grade systems.
+
+*See [`DEV_LOG.md`](./DEV_LOG.md) for the complete breakdown of prompts, AI flaws, and manual refactoring entries.*
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18.x or higher
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd api-request-playground
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🏗️ Architecture & Data Flow
+
+The application adheres to a strict uni-directional data flow, utilizing a globally available `useReducer` to manage complex, nested UI states predictably.
+
+### Component Hierarchy
+
+```text
+app/page.tsx (Root)
+ ├── RequestProvider (Context Wrapper)
+ ├── HistorySidebar
+ │    └── HistoryItem (x N)
+ ├── RequestWorkbench
+ │    ├── MethodSelector
+ │    ├── UrlBar
+ │    ├── KeyValueEditor (Params/Headers)
+ │    └── BodyEditor (Debounced Validation)
+ └── ResponsePanel
+      ├── StatusBadge
+      ├── MetaBar (Latency & Bytes)
+      ├── JsonViewer (Regex Tokenizer)
+      └── HeadersInspector
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### State Management (`useReducer` + Context API)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To optimize rendering performance, the React Context is split into two providers:
+1. `RequestStateContext` — Read-only state access for the response viewer.
+2. `RequestDispatchContext` — Write-only dispatch access for inputs.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This guarantees that deeply nested inputs (like the HTTP method dropdown) do not re-render the entire application tree upon changing state.
 
-## Learn More
+### `localStorage` & Hydration
 
-To learn more about Next.js, take a look at the following resources:
+Request history is intelligently bounded to the last 50 queries. To prevent exceeding browser `localStorage` quotas (~5MB), full response payloads are dropped from storage; only lightweight request configurations and response metadata (status, latency) are serialized. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Storage hydration is heavily guarded against Next.js Server-Side Rendering (SSR) mismatches by fetching initial state strictly inside a client-side `useEffect` hook.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
+- **UI & Styling:** [React 18](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Language:** TypeScript
+- **HTTP Engine:** Native Browser `fetch()` API
