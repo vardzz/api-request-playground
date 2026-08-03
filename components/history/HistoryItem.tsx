@@ -1,14 +1,15 @@
 import { HistoryEntry } from '../../types';
 import { getStatusColorClass } from '../../lib/http-utils';
-import { Clock3 } from 'lucide-react';
+import { Clock3, Trash2 } from 'lucide-react';
 
 interface HistoryItemProps {
   entry: HistoryEntry;
   onClick: () => void;
+  onDelete?: (e: React.MouseEvent) => void;
   selected?: boolean;
 }
 
-export default function HistoryItem({ entry, onClick, selected }: HistoryItemProps) {
+export default function HistoryItem({ entry, onClick, onDelete, selected }: HistoryItemProps) {
   const { request, responseSummary, timestamp } = entry;
   
   // Custom status color mapping for Apex
@@ -61,12 +62,26 @@ export default function HistoryItem({ entry, onClick, selected }: HistoryItemPro
         </div>
       </div>
       
-      <div className="flex items-center justify-between text-[10px] text-muted-text font-mono">
+      <div className="flex items-center justify-between text-[10px] text-muted-text font-mono relative">
         <span className="flex items-center gap-1.5">
           <Clock3 size={12} className="opacity-70" />
           {formattedTime}
         </span>
-        <span className="opacity-80">{responseSummary.timeMs} ms</span>
+        <span className="opacity-80 group-hover:opacity-0 transition-opacity">{responseSummary.timeMs} ms</span>
+        
+        {/* Delete Button (visible on hover) */}
+        {onDelete && (
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(e);
+            }}
+            className="absolute right-0 opacity-0 group-hover:opacity-100 p-1 text-zinc-500 hover:text-red-400 transition-all z-10 bg-[#13131a] rounded"
+            title="Delete from history"
+          >
+            <Trash2 size={14} />
+          </button>
+        )}
       </div>
     </div>
   );

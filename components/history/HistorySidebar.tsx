@@ -83,6 +83,10 @@ export default function HistorySidebar() {
                         key={entry.id} 
                         entry={entry} 
                         onClick={() => dispatch({ type: 'LOAD_FROM_HISTORY', payload: entry })}
+                        onDelete={() => {
+                          const newHistory = history.filter(h => h.id !== entry.id);
+                          dispatch({ type: 'SET_HISTORY', payload: newHistory });
+                        }}
                       />
                     ))}
                   </div>
