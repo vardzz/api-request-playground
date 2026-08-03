@@ -12,13 +12,8 @@ interface HistoryItemProps {
 export default function HistoryItem({ entry, onClick, onDelete, selected }: HistoryItemProps) {
   const { request, responseSummary, timestamp } = entry;
   
-  // Custom status color mapping for Apex
   const getApexStatusColor = (status: number) => {
-    if (status >= 200 && status < 300) return 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20';
-    if (status >= 300 && status < 400) return 'text-blue-400 bg-blue-500/10 border border-blue-500/20';
-    if (status >= 400 && status < 500) return 'text-amber-400 bg-amber-500/10 border border-amber-500/20';
-    if (status >= 500) return 'text-red-400 bg-red-500/10 border border-red-500/20';
-    return 'text-zinc-400 bg-zinc-800 border border-zinc-700';
+    return 'text-[#F4F1EA] bg-[#0F1115] border border-[#F4F1EA]/20';
   };
 
   const getMethodColor = (method: string) => {
@@ -28,7 +23,7 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
       case 'PUT': return 'text-amber-400';
       case 'PATCH': return 'text-purple-400';
       case 'DELETE': return 'text-red-400';
-      default: return 'text-zinc-400';
+      default: return 'text-[#F4F1EA]';
     }
   };
 
@@ -40,12 +35,11 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
       onClick={onClick}
       onContextMenu={(e) => {
         e.preventDefault();
-        // Context menu logic placeholder
       }}
-      className={`w-full text-left p-3 rounded-xl transition-all cursor-pointer group flex flex-col gap-2 ${
+      className={`w-full text-left p-3 rounded-xl transition-all cursor-pointer group flex flex-col gap-2 relative ${
         selected 
-          ? 'bg-zinc-900 border border-purple-500/50 shadow-sm' 
-          : 'bg-transparent border border-transparent hover:bg-zinc-900/50 hover:border-zinc-800/80'
+          ? 'bg-[#0F1115] border border-[#F4F1EA] shadow-sm' 
+          : 'bg-[#0F1115] border border-transparent hover:border-[#F4F1EA]/50'
       }`}
     >
       <div className="flex items-center justify-between">
@@ -53,7 +47,7 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
           <span className={`text-[11px] font-bold tracking-wider ${getMethodColor(request.method)}`}>
             {request.method}
           </span>
-          <span className={`text-xs font-mono truncate ${selected ? 'text-zinc-200' : 'text-zinc-400 group-hover:text-zinc-200 transition-colors'}`} title={request.url}>
+          <span className={`text-xs font-mono truncate ${selected ? 'text-[#F4F1EA]' : 'text-[#F4F1EA]/50 group-hover:text-[#F4F1EA] transition-colors'}`} title={request.url}>
             {request.url || 'Empty URL'}
           </span>
         </div>

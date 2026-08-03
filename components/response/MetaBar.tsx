@@ -6,23 +6,26 @@ interface MetaBarProps {
 }
 
 export default function MetaBar({ timeMs, sizeBytes }: MetaBarProps) {
+  const formatTime = (ms: number) => {
+    if (ms < 1000) return `${ms}ms`;
+    return `${(ms / 1000).toFixed(2)}s`;
+  };
+
   const formatSize = (bytes: number) => {
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   };
 
   return (
-    <div className="flex items-center gap-4 text-xs text-zinc-400 font-mono">
-      <div className="flex items-center gap-1">
-        <Clock3 size={12} />
-        <span>{timeMs} ms</span>
+    <div className="flex items-center gap-4 text-xs text-[#F4F1EA]/50 font-mono">
+      <div className="flex items-center gap-1.5" title="Response Time">
+        <Clock3 size={12} className="opacity-70 text-[#F4F1EA]" />
+        <span className="text-[#F4F1EA]">{formatTime(timeMs)}</span>
       </div>
-      <div className="flex items-center gap-1">
-        <Database size={12} />
-        <span>{formatSize(sizeBytes)}</span>
+      <div className="flex items-center gap-1.5" title="Response Size">
+        <Database size={12} className="opacity-70 text-[#F4F1EA]" />
+        <span className="text-[#F4F1EA]">{formatSize(sizeBytes)}</span>
       </div>
     </div>
   );

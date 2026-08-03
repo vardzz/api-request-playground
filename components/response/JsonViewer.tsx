@@ -79,18 +79,18 @@ export default function JsonViewer({ data }: JsonViewerProps) {
   const lines = Array.from({ length: Math.max(1, lineCount) }, (_, i) => i + 1);
 
   return (
-    <div className="flex h-full bg-[#0a0a0e] text-zinc-200 relative group text-xs leading-relaxed font-mono rounded-xl overflow-hidden">
+    <div className="flex h-full bg-[#0F1115] text-[#F4F1EA] relative group text-xs leading-relaxed font-mono rounded-xl overflow-hidden">
       {/* Copy Button */}
       <button 
         onClick={handleCopy}
-        className="absolute top-4 right-4 p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 transition-colors shadow-sm z-10 opacity-0 group-hover:opacity-100"
+        className="absolute top-4 right-4 p-2 bg-[#0F1115] border border-[#F4F1EA]/20 rounded-lg text-[#F4F1EA]/50 hover:text-[#F4F1EA] hover:border-[#F4F1EA]/50 transition-colors shadow-sm z-10 opacity-0 group-hover:opacity-100"
         title="Copy to clipboard"
       >
         {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
       </button>
 
       {/* Pseudo Gutter for Line Numbers */}
-      <div className="flex flex-col items-end py-4 select-none overflow-hidden text-zinc-600 text-right pr-4 pl-4 border-r border-zinc-800/40">
+      <div className="flex flex-col items-end py-4 select-none overflow-hidden text-[#F4F1EA]/30 text-right pr-4 pl-4 border-r border-[#F4F1EA]/10">
         {lines.map(line => (
           <div key={line} className="h-[21px]">{line}</div>
         ))}

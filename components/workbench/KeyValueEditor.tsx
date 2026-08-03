@@ -8,17 +8,13 @@ interface KeyValueEditorProps {
   onAdd: (item: KeyValuePair) => void;
   onUpdate: (item: KeyValuePair) => void;
   onRemove: (id: string) => void;
-  placeholderKey?: string;
-  placeholderValue?: string;
 }
 
 export default function KeyValueEditor({ 
   items, 
   onAdd, 
   onUpdate, 
-  onRemove,
-  placeholderKey = "Key",
-  placeholderValue = "Value"
+  onRemove 
 }: KeyValueEditorProps) {
   const handleAdd = () => {
     onAdd({
@@ -29,76 +25,79 @@ export default function KeyValueEditor({
     });
   };
 
-  if (items.length === 0) {
-    return (
-      <div className="text-center py-10 flex flex-col items-center justify-center">
-        <p className="text-sm text-zinc-500 mb-4">No parameters configured.</p>
-        <button
-          onClick={handleAdd}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-200 bg-zinc-900/80 hover:bg-zinc-800/80 border border-zinc-800/80 rounded-lg transition-colors"
-        >
-          <Plus size={16} />
-          Add Parameter
-        </button>
-      </div>
-    );
-  }
+  const updateItem = (id: string, updates: Partial<KeyValuePair>) => {
+    const item = items.find(i => i.id === id);
+    if (item) {
+      onUpdate({ ...item, ...updates });
+    }
+  };
 
   return (
-    <div className="space-y-3">
-      {items.map((item) => (
-        <div key={item.id} className="flex items-center gap-3 group relative">
+    <div className="flex flex-col h-full bg-[#0F1115]">
+      {items.length === 0 ? (
+        <div className="flex-1 flex flex-col items-center justify-center p-8">
+          <p className="text-sm text-[#F4F1EA]/50 mb-4">No parameters configured.</p>
+          <button
+            onClick={handleAdd}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#F4F1EA] bg-[#0F1115] hover:bg-[#F4F1EA]/10 border border-[#F4F1EA]/20 rounded-lg transition-colors"
+          >
+            <Plus size={16} /> Add Parameter
+          </button>
+        </div>
+      ) : (
+        <div className="flex-1 overflow-y-auto space-y-2 p-1">
+          {items.map((item) => (
+            <div key={item.id} className="flex items-center gap-3 group relative">
+              {/* Custom Checkbox */}
+              <button
+                onClick={() => updateItem(item.id, { enabled: !item.enabled })}
+                className={`w-4 h-4 rounded flex items-center justify-center border transition-colors flex-shrink-0 ${
+                  item.enabled
+                    ? 'bg-[#F4F1EA] border-[#F4F1EA] text-[#0F1115]'
+                    : 'bg-[#0F1115] border-[#F4F1EA]/20 text-transparent'
+                }`}
+              >
+                <Check size={12} strokeWidth={3} />
+              </button>
+
+              <input
+                type="text"
+                value={item.key}
+                onChange={(e) => updateItem(item.id, { key: e.target.value })}
+                placeholder="New parameter"
+                className="flex-1 bg-[#0F1115] border border-[#F4F1EA]/20 text-[#F4F1EA] text-sm rounded-lg px-3 py-2 focus:border-[#F4F1EA]/50 placeholder:text-[#F4F1EA]/30 focus:outline-none transition-colors font-mono"
+                spellCheck={false}
+              />
+              
+              <input
+                type="text"
+                value={item.value}
+                onChange={(e) => updateItem(item.id, { value: e.target.value })}
+                placeholder="Value"
+                className="flex-1 bg-[#0F1115] border border-[#F4F1EA]/20 text-[#F4F1EA] text-sm rounded-lg px-3 py-2 focus:border-[#F4F1EA]/50 placeholder:text-[#F4F1EA]/30 focus:outline-none transition-colors font-mono"
+                spellCheck={false}
+              />
+              
+              <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity absolute right-[-24px]">
+                <button
+                  onClick={() => onRemove(item.id)}
+                  className="p-1.5 text-[#F4F1EA]/50 hover:text-[#F4F1EA] transition-colors"
+                  title="Remove item"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          ))}
           
           <button
-            onClick={() => onUpdate({ ...item, enabled: !item.enabled })}
-            className={`w-5 h-5 flex-shrink-0 rounded-[4px] border flex items-center justify-center transition-colors ${
-              item.enabled 
-                ? 'bg-purple-600 border-purple-600 text-white' 
-                : 'bg-zinc-900/90 border-zinc-700 text-transparent'
-            }`}
+            onClick={handleAdd}
+            className="text-[#F4F1EA]/50 hover:text-[#F4F1EA] text-sm flex items-center gap-1.5 mt-3 transition-colors"
           >
-            <Check size={14} strokeWidth={3} />
+            <Plus size={14} /> Add Param
           </button>
-          
-          <input
-            type="text"
-            value={item.key}
-            onChange={(e) => onUpdate({ ...item, key: e.target.value })}
-            placeholder={placeholderKey}
-            className="flex-1 bg-zinc-900/90 border border-zinc-800/80 text-zinc-200 text-sm rounded-lg px-3 py-2 focus:border-purple-500/50 placeholder:text-zinc-600 focus:outline-none transition-colors font-mono"
-            spellCheck={false}
-          />
-          
-          <input
-            type="text"
-            value={item.value}
-            onChange={(e) => onUpdate({ ...item, value: e.target.value })}
-            placeholder={placeholderValue}
-            className="flex-1 bg-zinc-900/90 border border-zinc-800/80 text-zinc-200 text-sm rounded-lg px-3 py-2 focus:border-purple-500/50 placeholder:text-zinc-600 focus:outline-none transition-colors font-mono"
-            spellCheck={false}
-          />
-          
-          <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity absolute right-[-24px]">
-            <button
-              onClick={() => onRemove(item.id)}
-              className="p-1.5 text-zinc-500 hover:text-red-400 transition-colors"
-              title="Remove item"
-            >
-              <Trash2 size={16} />
-            </button>
-          </div>
         </div>
-      ))}
-      
-      <div className="pt-2 flex pl-8">
-        <button
-          onClick={handleAdd}
-          className="text-zinc-400 hover:text-zinc-200 text-sm flex items-center gap-1.5 mt-3 transition-colors"
-        >
-          <Plus size={14} />
-          {placeholderKey === 'New header' ? 'Add Header' : 'Add Param'}
-        </button>
-      </div>
+      )}
     </div>
   );
 }

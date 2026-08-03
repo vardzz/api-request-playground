@@ -58,13 +58,13 @@ export default function ResponsePanel() {
   return (
     <div className="flex flex-col bg-transparent border-none overflow-hidden h-full">
       {/* Top Bar: Status & Metadata */}
-      <div className="flex items-center justify-between p-4 bg-transparent border-b border-zinc-800/60">
+      <div className="flex items-center justify-between p-4 bg-transparent border-b border-[#F4F1EA]/20">
         <StatusBadge status={response.status} statusText={response.statusText} />
         <MetaBar timeMs={response.timeMs} sizeBytes={response.sizeBytes} />
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center px-4 pt-2 border-b border-zinc-800/60 bg-transparent">
+      <div className="flex items-center px-4 pt-2 border-b border-[#F4F1EA]/20 bg-transparent">
         {[
           { id: 'body', label: 'Response Body' },
           { id: 'headers', label: 'Headers', count: Object.keys(response.headers).length }
@@ -74,13 +74,13 @@ export default function ResponsePanel() {
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-3 py-2 text-sm transition-colors border-b-2 -mb-[1px] flex items-center gap-2 ${
               activeTab === tab.id
-                ? 'border-purple-500 text-zinc-100 font-medium'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-[#F4F1EA] text-[#F4F1EA] font-medium'
+                : 'border-transparent text-[#F4F1EA]/50 hover:text-[#F4F1EA]'
             }`}
           >
             {tab.label}
             {tab.count !== undefined && tab.count > 0 && (
-              <span className={`px-1.5 py-0.5 text-[10px] rounded font-mono ${activeTab === tab.id ? 'bg-zinc-800 text-zinc-300' : 'bg-transparent text-zinc-500'}`}>
+              <span className={`px-1.5 py-0.5 text-[10px] rounded font-mono ${activeTab === tab.id ? 'bg-[#0F1115] text-[#F4F1EA]' : 'bg-transparent text-[#F4F1EA]/50'}`}>
                 {tab.count}
               </span>
             )}
@@ -91,7 +91,7 @@ export default function ResponsePanel() {
       {/* Content Area */}
       <div className="p-4 bg-transparent flex-1 overflow-hidden h-full relative">
         {activeTab === 'body' && (
-          <div className="h-full w-full rounded-xl overflow-hidden bg-[#0a0a0e] border border-zinc-900">
+          <div className="h-full w-full rounded-xl overflow-hidden bg-[#0F1115] border border-[#F4F1EA]/20">
             <JsonViewer data={response.data} />
           </div>
         )}

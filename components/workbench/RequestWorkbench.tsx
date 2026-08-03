@@ -21,16 +21,16 @@ export default function RequestWorkbench() {
       
       {/* Top Toolbar */}
       <div className="p-4 flex items-center gap-3">
-        <div className="flex-1 flex items-center bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-1 h-12 shadow-sm">
+        <div className="flex-1 flex items-center bg-[#0F1115] border border-[#F4F1EA]/20 rounded-xl p-1 h-12 shadow-sm">
           <MethodSelector />
-          <div className="w-px h-6 bg-zinc-800 mx-2" />
+          <div className="w-px h-6 bg-[#F4F1EA]/20 mx-2" />
           <UrlBar />
         </div>
         
         <button 
           onClick={sendRequest}
           disabled={state.isLoading}
-          className="h-12 flex items-center justify-center gap-2 px-5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-purple-900/20 flex-shrink-0"
+          className="h-12 flex items-center justify-center gap-2 px-5 bg-[#F4F1EA] hover:bg-[#F4F1EA]/80 text-[#0F1115] rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm flex-shrink-0"
         >
           <Send size={16} className={state.isLoading ? 'animate-pulse' : ''} />
           <span>Send</span>
@@ -38,7 +38,7 @@ export default function RequestWorkbench() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center px-4 pt-2 border-b border-zinc-800/60">
+      <div className="flex items-center px-4 pt-2 border-b border-[#F4F1EA]/20">
         {[
           { id: 'params', label: 'Params', count: state.request.params.filter(p => p.key).length },
           { id: 'headers', label: 'Headers', count: state.request.headers.filter(h => h.key).length },
@@ -49,13 +49,13 @@ export default function RequestWorkbench() {
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-3 py-2 text-sm transition-colors border-b-2 -mb-[1px] flex items-center gap-2 ${
               activeTab === tab.id
-                ? 'border-purple-500 text-zinc-100 font-medium'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
+                ? 'border-[#F4F1EA] text-[#F4F1EA] font-medium'
+                : 'border-transparent text-[#F4F1EA]/50 hover:text-[#F4F1EA]'
             }`}
           >
             {tab.label}
             {tab.count > 0 && (
-              <span className={`px-1.5 py-0.5 text-[10px] rounded font-mono ${activeTab === tab.id ? 'bg-zinc-800 text-zinc-300' : 'bg-transparent text-zinc-500'}`}>
+              <span className={`px-1.5 py-0.5 text-[10px] rounded font-mono ${activeTab === tab.id ? 'bg-[#F4F1EA]/20 text-[#F4F1EA]' : 'bg-transparent text-[#F4F1EA]/50'}`}>
                 {tab.count}
               </span>
             )}

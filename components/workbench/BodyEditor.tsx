@@ -44,15 +44,15 @@ export default function BodyEditor() {
   const lines = Array.from({ length: Math.max(10, lineCount) }, (_, i) => i + 1);
 
   return (
-    <div className="flex flex-col h-full bg-background relative group">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-surface/50">
+    <div className="flex flex-col h-full bg-[#0F1115] relative group rounded-xl border border-[#F4F1EA]/10 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-[#F4F1EA]/10 bg-[#16181D]">
         <div className="flex items-center gap-2">
-          <Braces size={14} className="text-accent" />
-          <span className="text-[11px] font-bold text-primary-text uppercase tracking-widest">JSON</span>
+          <Braces size={14} className="text-[#F4F1EA]/60" />
+          <span className="text-[11px] font-bold text-[#F4F1EA]/60 uppercase tracking-widest">JSON</span>
         </div>
         <div className="flex items-center gap-1.5">
           {isBodyEmpty ? (
-            <span className="text-xs text-muted-text">Empty</span>
+            <span className="text-xs text-[#F4F1EA]/30">Empty</span>
           ) : isValidJson ? (
             <div className="flex items-center gap-1.5 bg-success/10 px-2 py-0.5 rounded-pill">
               <CheckCircle2 size={12} className="text-success" />

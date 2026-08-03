@@ -27,15 +27,15 @@ export default function MethodSelector() {
       <select
         value={state.request.method}
         onChange={(e) => dispatch({ type: 'SET_METHOD', payload: e.target.value as HttpMethod })}
-        className={`appearance-none bg-transparent ${getMethodColor(state.request.method)} font-bold text-sm h-full pl-3 pr-7 py-1.5 focus:outline-none cursor-pointer tracking-wide`}
+        className={`h-full bg-transparent appearance-none border-none pl-3 pr-8 text-sm font-bold tracking-wider focus:outline-none focus:ring-0 cursor-pointer ${getMethodColor(state.request.method)}`}
       >
-        {METHODS.map((method) => (
-          <option key={method} value={method} className="bg-zinc-900 text-zinc-200">
+        {METHODS.map(method => (
+          <option key={method} value={method} className="bg-[#0F1115] text-[#F4F1EA]">
             {method}
           </option>
         ))}
       </select>
-      <div className="absolute inset-y-0 right-1 flex items-center pointer-events-none text-zinc-500 group-hover/method:text-zinc-400 transition-colors">
+      <div className="absolute inset-y-0 right-1 flex items-center pointer-events-none text-[#F4F1EA]/50 group-hover/method:text-[#F4F1EA] transition-colors">
         <ChevronDown size={14} />
       </div>
     </div>
