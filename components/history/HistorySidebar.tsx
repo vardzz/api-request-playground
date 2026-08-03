@@ -3,7 +3,7 @@
 import { useHistory } from '../../hooks/useHistory';
 import { useRequestDispatch } from '../../context/RequestContext';
 import HistoryItem from './HistoryItem';
-import { Clock, Folder, Settings, ChevronsLeft } from 'lucide-react';
+import { Clock, Folder } from 'lucide-react';
 import { useState } from 'react';
 import { HistoryEntry } from '../../types';
 
@@ -65,7 +65,7 @@ export default function HistorySidebar() {
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-4 mb-12">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-4">
         {activeTab === 'history' ? (
           history.length === 0 ? (
             <div className="p-6 text-center text-sm text-zinc-400 font-medium flex flex-col items-center gap-3 mt-20">
@@ -105,16 +105,6 @@ export default function HistorySidebar() {
             <p>Collections coming soon.</p>
           </div>
         )}
-      </div>
-
-      {/* Footer Settings */}
-      <div className="absolute bottom-0 left-0 w-full p-4 border-t border-zinc-800/60 bg-transparent flex items-center justify-between text-zinc-400">
-        <button className="hover:text-zinc-200 transition-colors">
-          <Settings size={18} />
-        </button>
-        <button className="hover:text-zinc-200 transition-colors">
-          <ChevronsLeft size={18} />
-        </button>
       </div>
     </div>
   );
