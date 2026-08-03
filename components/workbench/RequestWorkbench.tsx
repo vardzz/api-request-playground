@@ -28,13 +28,6 @@ export default function RequestWorkbench() {
         </div>
         
         <button 
-          className="w-12 h-12 flex items-center justify-center bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 rounded-xl transition-colors flex-shrink-0"
-          title="Save Request"
-        >
-          <Save size={20} />
-        </button>
-        
-        <button 
           onClick={sendRequest}
           disabled={state.isLoading}
           className="h-12 flex items-center justify-center gap-2 px-5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-purple-900/20 flex-shrink-0"
