@@ -42,9 +42,7 @@ export default function RequestWorkbench() {
         {[
           { id: 'params', label: 'Params', count: state.request.params.filter(p => p.key).length },
           { id: 'headers', label: 'Headers', count: state.request.headers.filter(h => h.key).length },
-          { id: 'auth', label: 'Authorization', count: 0 },
-          { id: 'body', label: 'Body', count: 0 },
-          { id: 'cookies', label: 'Cookies', count: 0 }
+          { id: 'body', label: 'Body', count: 0 }
         ].map(tab => (
           <button
             key={tab.id}
@@ -101,13 +99,6 @@ export default function RequestWorkbench() {
             <p className="text-xs text-zinc-500 mt-3 text-center">
               Body is typically omitted for GET or HEAD requests.
             </p>
-          </div>
-        )}
-
-        {['auth', 'cookies'].includes(activeTab) && (
-          <div className="h-full flex flex-col items-center justify-center text-zinc-500 border-2 border-dashed border-zinc-800/60 rounded-xl m-4 opacity-70">
-            <Settings2 size={32} className="mb-3 opacity-50" />
-            <p className="text-sm">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} configuration coming soon.</p>
           </div>
         )}
       </div>

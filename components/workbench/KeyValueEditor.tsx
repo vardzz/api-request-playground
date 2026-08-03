@@ -1,7 +1,7 @@
 'use client';
 
 import { KeyValuePair } from '../../types';
-import { Plus, Trash2, GripVertical, Check } from 'lucide-react';
+import { Plus, Trash2, Check } from 'lucide-react';
 
 interface KeyValueEditorProps {
   items: KeyValuePair[];
@@ -78,7 +78,7 @@ export default function KeyValueEditor({
             spellCheck={false}
           />
           
-          <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity absolute right-[-40px]">
+          <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity absolute right-[-24px]">
             <button
               onClick={() => onRemove(item.id)}
               className="p-1.5 text-zinc-500 hover:text-red-400 transition-colors"
@@ -86,9 +86,6 @@ export default function KeyValueEditor({
             >
               <Trash2 size={16} />
             </button>
-            <div className="text-zinc-600 cursor-grab p-1.5 hover:text-zinc-400">
-              <GripVertical size={16} />
-            </div>
           </div>
         </div>
       ))}
