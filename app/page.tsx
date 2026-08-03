@@ -32,10 +32,10 @@ export default function Home() {
           
           {/* Left: Branding */}
           <div className="flex items-center gap-3 flex-1">
-            <div className="relative w-[20px] h-[20px] flex items-center justify-center">
+            <div className="relative w-7 h-7 flex items-center justify-center">
               <Image src={apexLogo} alt="Apex Logo" fill className="object-contain" />
             </div>
-            <h1 className="text-lg font-heading font-semibold tracking-tight text-[#F4F1EA]">Apex</h1>
+            <h1 className="text-xl font-heading font-bold tracking-tight text-[#F4F1EA]">Apex</h1>
             <span className="hidden md:inline-flex items-center rounded bg-[#0F1115] px-2 py-0.5 text-xs font-medium text-[#F4F1EA] border border-[#F4F1EA]/20">
               Workspace
             </span>
