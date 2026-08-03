@@ -8,13 +8,17 @@ interface KeyValueEditorProps {
   onAdd: (item: KeyValuePair) => void;
   onUpdate: (item: KeyValuePair) => void;
   onRemove: (id: string) => void;
+  placeholderKey?: string;
+  placeholderValue?: string;
 }
 
 export default function KeyValueEditor({ 
   items, 
   onAdd, 
   onUpdate, 
-  onRemove 
+  onRemove,
+  placeholderKey = "Key",
+  placeholderValue = "Value"
 }: KeyValueEditorProps) {
   const handleAdd = () => {
     onAdd({
@@ -64,7 +68,7 @@ export default function KeyValueEditor({
                 type="text"
                 value={item.key}
                 onChange={(e) => updateItem(item.id, { key: e.target.value })}
-                placeholder="New parameter"
+                placeholder={placeholderKey}
                 className="flex-1 bg-[#0F1115] border border-[#F4F1EA]/20 text-[#F4F1EA] text-sm rounded-lg px-3 py-2 focus:border-[#F4F1EA]/50 placeholder:text-[#F4F1EA]/30 focus:outline-none transition-colors font-mono"
                 spellCheck={false}
               />
@@ -73,7 +77,7 @@ export default function KeyValueEditor({
                 type="text"
                 value={item.value}
                 onChange={(e) => updateItem(item.id, { value: e.target.value })}
-                placeholder="Value"
+                placeholder={placeholderValue}
                 className="flex-1 bg-[#0F1115] border border-[#F4F1EA]/20 text-[#F4F1EA] text-sm rounded-lg px-3 py-2 focus:border-[#F4F1EA]/50 placeholder:text-[#F4F1EA]/30 focus:outline-none transition-colors font-mono"
                 spellCheck={false}
               />

@@ -95,7 +95,7 @@ export default function HistorySidebar({ searchQuery = '' }: HistorySidebarProps
                         onDelete={() => {
                           const newHistory = history.filter(h => h.id !== entry.id);
                           dispatch({ type: 'SET_HISTORY', payload: newHistory });
-                          storage.setHistory(newHistory);
+                          storage.set('api_playground_history', newHistory);
                         }}
                       />
                     ))}
