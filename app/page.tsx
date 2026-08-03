@@ -4,9 +4,24 @@ import { RequestProvider } from '../context/RequestContext';
 import RequestWorkbench from '../components/workbench/RequestWorkbench';
 import ResponsePanel from '../components/response/ResponsePanel';
 import HistorySidebar from '../components/history/HistorySidebar';
-import { Triangle, Search, Settings2, Plus } from 'lucide-react';
+import { Triangle, Search } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <RequestProvider>
       <div className="flex flex-col h-screen overflow-hidden font-sans bg-[#0d0d11] text-zinc-300">
@@ -27,8 +42,11 @@ export default function Home() {
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
               <input 
+                ref={searchInputRef}
                 type="text" 
                 placeholder="Search requests..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-1.5 pl-9 pr-14 text-sm text-zinc-300 placeholder:text-zinc-500 focus:outline-none focus:border-zinc-700 transition-all"
               />
               <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
@@ -46,7 +64,7 @@ export default function Home() {
         <div className="flex flex-1 overflow-hidden flex-col md:flex-row bg-[#0d0d11]">
           {/* History Sidebar */}
           <div className="hidden md:flex flex-col h-full border-r border-zinc-800/60 bg-[#13131a]" style={{ width: '22%' }}>
-            <HistorySidebar />
+            <HistorySidebar searchQuery={searchQuery} />
           </div>
           
           <main className="flex-1 flex overflow-hidden">

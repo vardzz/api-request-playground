@@ -3,13 +3,15 @@
 import { useHistory } from '../../hooks/useHistory';
 import { useRequestDispatch } from '../../context/RequestContext';
 import HistoryItem from './HistoryItem';
-import { Clock, Folder } from 'lucide-react';
-import { useState } from 'react';
+import { Clock } from 'lucide-react';
 import { HistoryEntry } from '../../types';
-
 import { storage } from '../../lib/storage';
 
-export default function HistorySidebar() {
+interface HistorySidebarProps {
+  searchQuery?: string;
+}
+
+export default function HistorySidebar({ searchQuery = '' }: HistorySidebarProps) {
   const { history } = useHistory();
   const dispatch = useRequestDispatch();
 
@@ -25,7 +27,24 @@ export default function HistorySidebar() {
       'Earlier': []
     };
 
+    const query = searchQuery.toLowerCase().trim();
+
     items.forEach(item => {
+      // Search filtering
+      if (query) {
+        const urlMatch = item.request.url.toLowerCase().includes(query);
+        const methodMatch = item.request.method.toLowerCase().includes(query);
+        const statusMatch = item.responseSummary.status.toString().includes(query);
+        
+        // Also check inside query params and headers
+        const paramsMatch = item.request.params.some(p => p.enabled && (p.key.toLowerCase().includes(query) || p.value.toLowerCase().includes(query)));
+        const headersMatch = item.request.headers.some(h => h.enabled && (h.key.toLowerCase().includes(query) || h.value.toLowerCase().includes(query)));
+        
+        if (!urlMatch && !methodMatch && !statusMatch && !paramsMatch && !headersMatch) {
+          return; // skip this item
+        }
+      }
+
       const date = new Date(item.timestamp);
       if (date >= today) grouped['Today'].push(item);
       else if (date >= yesterday) grouped['Yesterday'].push(item);
