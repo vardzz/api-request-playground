@@ -1,4 +1,4 @@
-import { Clock, HardDrive } from 'lucide-react';
+import { Clock3, HardDrive, ArrowDownUp } from 'lucide-react';
 
 interface MetaBarProps {
   timeMs: number;
@@ -15,14 +15,20 @@ export default function MetaBar({ timeMs, sizeBytes }: MetaBarProps) {
   };
 
   return (
-    <div className="flex items-center gap-4 text-xs font-medium text-zinc-400 font-mono">
+    <div className="flex items-center gap-4 text-xs font-medium text-muted-text font-mono">
       <div className="flex items-center gap-1.5">
-        <Clock size={12} className="text-zinc-500" />
-        <span>{timeMs} <span className="text-[10px] text-zinc-500">ms</span></span>
+        <Clock3 size={14} className="text-secondary-text opacity-70" />
+        <span className="text-primary-text">{timeMs} <span className="text-[10px] text-muted-text uppercase tracking-wider">ms</span></span>
       </div>
+      <div className="w-px h-3 bg-border" />
       <div className="flex items-center gap-1.5">
-        <HardDrive size={12} className="text-zinc-500" />
-        <span>{formatSize(sizeBytes)}</span>
+        <HardDrive size={14} className="text-secondary-text opacity-70" />
+        <span className="text-primary-text">{formatSize(sizeBytes)}</span>
+      </div>
+      <div className="w-px h-3 bg-border" />
+      <div className="flex items-center gap-1.5 hidden sm:flex">
+        <ArrowDownUp size={14} className="text-secondary-text opacity-70" />
+        <span className="text-primary-text">HTTP/2</span>
       </div>
     </div>
   );

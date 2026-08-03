@@ -1,18 +1,31 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { Copy, Check } from 'lucide-react';
 
 interface JsonViewerProps {
   data: unknown;
 }
 
 export default function JsonViewer({ data }: JsonViewerProps) {
-  // Pitfall #5 & #7: Handle non-JSON gracefully and memoize syntax highlighting
-  const { isJson, stringified, tokens } = useMemo(() => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    const textToCopy = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Handle non-JSON gracefully and memoize syntax highlighting
+  const { isJson, stringified, tokens, lineCount } = useMemo(() => {
     if (typeof data === 'string') {
-      return { isJson: false, stringified: data, tokens: [] };
+      const lineCount = data.split('\n').length;
+      return { isJson: false, stringified: data, tokens: [], lineCount };
     }
 
     try {
       const str = JSON.stringify(data, null, 2);
+      const lineCount = str.split('\n').length;
+      
       // Basic JSON tokenizer for syntax highlighting
       // Matches: Strings (keys or values), booleans, null, numbers
       const jsonRegex = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
@@ -30,17 +43,17 @@ export default function JsonViewer({ data }: JsonViewerProps) {
         }
         
         // Determine token type
-        let cls = 'text-amber-400'; // number
+        let cls = 'text-warning'; // number
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
-            cls = 'text-cyan-400 font-medium'; // key
+            cls = 'text-accent font-medium'; // key
           } else {
-            cls = 'text-emerald-400'; // string
+            cls = 'text-success'; // string
           }
         } else if (/true|false/.test(match)) {
-          cls = 'text-amber-500 font-medium'; // boolean
+          cls = 'text-[#8B5CF6] font-medium'; // boolean (purple)
         } else if (/null/.test(match)) {
-          cls = 'text-zinc-500 font-bold'; // null
+          cls = 'text-danger font-medium'; // null (red)
         }
         
         parsedTokens.push(<span key={offset} className={cls}>{match}</span>);
@@ -54,18 +67,41 @@ export default function JsonViewer({ data }: JsonViewerProps) {
         parsedTokens.push(str.slice(lastIndex));
       }
       
-      return { isJson: true, stringified: str, tokens: parsedTokens };
+      return { isJson: true, stringified: str, tokens: parsedTokens, lineCount };
     } catch {
       // Fallback if stringify fails for some reason
-      return { isJson: false, stringified: String(data), tokens: [] };
+      const str = String(data);
+      const lineCount = str.split('\n').length;
+      return { isJson: false, stringified: str, tokens: [], lineCount };
     }
   }, [data]);
 
+  const lines = Array.from({ length: Math.max(1, lineCount) }, (_, i) => i + 1);
+
   return (
-    <div className="bg-[#1e1e1e] rounded-md border border-zinc-800 overflow-x-auto text-sm p-4 font-mono leading-relaxed h-full scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
-      <pre className="whitespace-pre text-zinc-300">
-        {isJson ? tokens : stringified}
-      </pre>
+    <div className="flex h-full bg-background relative group text-[13px] leading-relaxed">
+      {/* Copy Button */}
+      <button 
+        onClick={handleCopy}
+        className="absolute top-4 right-4 p-2 bg-elevated border border-border rounded-button text-muted-text hover:text-primary-text hover:border-border/80 transition-colors shadow-sm z-10 click-scale opacity-0 group-hover:opacity-100"
+        title="Copy to clipboard"
+      >
+        {copied ? <Check size={16} className="text-success" /> : <Copy size={16} />}
+      </button>
+
+      {/* Pseudo Gutter for Line Numbers */}
+      <div className="w-12 bg-surface/30 border-r border-border flex flex-col items-end py-4 select-none overflow-hidden font-mono text-muted-text/50">
+        {lines.map(line => (
+          <div key={line} className="pr-3 h-[21px]">{line}</div>
+        ))}
+      </div>
+      
+      {/* Code Area */}
+      <div className="flex-1 overflow-x-auto p-4 font-mono scrollbar-thin scrollbar-thumb-elevated scrollbar-track-transparent">
+        <pre className="whitespace-pre text-primary-text selection:bg-accent/30" style={{ lineHeight: '21px' }}>
+          {isJson ? tokens : stringified}
+        </pre>
+      </div>
     </div>
   );
 }
