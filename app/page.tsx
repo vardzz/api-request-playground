@@ -7,7 +7,7 @@ import HistorySidebar from '../components/history/HistorySidebar';
 import { Search } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import apexLogo from './apex-logo.png';
+import apexLogo from './logo.png';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,7 +32,7 @@ export default function Home() {
           
           {/* Left: Branding */}
           <div className="flex items-center gap-3 flex-1">
-            <div className="relative w-7 h-7 flex items-center justify-center">
+            <div className="relative w-8 h-8 flex items-center justify-center">
               <Image src={apexLogo} alt="Apex Logo" fill className="object-contain" />
             </div>
             <h1 className="text-xl font-heading font-bold tracking-tight text-[#F4F1EA]">Apex</h1>
