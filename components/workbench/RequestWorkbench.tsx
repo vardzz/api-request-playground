@@ -6,12 +6,14 @@ import MethodSelector from './MethodSelector';
 import UrlBar from './UrlBar';
 import KeyValueEditor from './KeyValueEditor';
 import BodyEditor from './BodyEditor';
-import { Send, Save, Settings2 } from 'lucide-react';
+import { Play, Save, Settings2, Send } from 'lucide-react';
 import { KeyValuePair } from '../../types';
+import { useSendRequest } from '../../hooks/useSendRequest';
 
 export default function RequestWorkbench() {
   const state = useRequestState();
   const dispatch = useRequestDispatch();
+  const { sendRequest } = useSendRequest();
   const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'auth' | 'body' | 'cookies'>('headers');
 
   return (
@@ -33,7 +35,7 @@ export default function RequestWorkbench() {
         </button>
         
         <button 
-          onClick={() => dispatch({ type: 'SEND_REQUEST' })}
+          onClick={sendRequest}
           disabled={state.isLoading}
           className="h-12 flex items-center justify-center gap-2 px-5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-purple-900/20 flex-shrink-0"
         >

@@ -4,7 +4,7 @@ import { useRequestState, useRequestDispatch } from '../../context/RequestContex
 import { ChevronDown } from 'lucide-react';
 import { HttpMethod } from '../../types';
 
-const METHODS: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'];
+const METHODS: HttpMethod[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 
 export default function MethodSelector() {
   const state = useRequestState();
