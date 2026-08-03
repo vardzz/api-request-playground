@@ -43,17 +43,17 @@ export default function JsonViewer({ data }: JsonViewerProps) {
         }
         
         // Determine token type
-        let cls = 'text-warning'; // number
+        let cls = 'text-purple-400'; // number
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
-            cls = 'text-[#3B82F6]'; // key (blue)
+            cls = 'text-cyan-400'; // key
           } else {
-            cls = 'text-[#22c55e]'; // string (green)
+            cls = 'text-emerald-400'; // string
           }
         } else if (/true|false/.test(match)) {
-          cls = 'text-[#8B5CF6]'; // boolean (purple)
+          cls = 'text-purple-400'; // boolean
         } else if (/null/.test(match)) {
-          cls = 'text-danger'; // null (red)
+          cls = 'text-zinc-500'; // null
         }
         
         parsedTokens.push(<span key={offset} className={cls}>{match}</span>);
@@ -79,26 +79,26 @@ export default function JsonViewer({ data }: JsonViewerProps) {
   const lines = Array.from({ length: Math.max(1, lineCount) }, (_, i) => i + 1);
 
   return (
-    <div className="flex h-full bg-background relative group text-[13px] leading-relaxed">
+    <div className="flex h-full bg-[#0a0a0e] text-zinc-200 relative group text-xs leading-relaxed font-mono rounded-xl overflow-hidden">
       {/* Copy Button */}
       <button 
         onClick={handleCopy}
-        className="absolute top-4 right-4 p-2 bg-elevated border border-border rounded-button text-muted-text hover:text-primary-text hover:border-border/80 transition-colors shadow-sm z-10 click-scale opacity-0 group-hover:opacity-100"
+        className="absolute top-4 right-4 p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 transition-colors shadow-sm z-10 opacity-0 group-hover:opacity-100"
         title="Copy to clipboard"
       >
-        {copied ? <Check size={16} className="text-success" /> : <Copy size={16} />}
+        {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
       </button>
 
       {/* Pseudo Gutter for Line Numbers */}
-      <div className="w-12 bg-surface/30 border-r border-border flex flex-col items-end py-4 select-none overflow-hidden font-mono text-muted-text/50">
+      <div className="flex flex-col items-end py-4 select-none overflow-hidden text-zinc-600 text-right pr-4 pl-4 border-r border-zinc-800/40">
         {lines.map(line => (
-          <div key={line} className="pr-3 h-[21px]">{line}</div>
+          <div key={line} className="h-[21px]">{line}</div>
         ))}
       </div>
       
       {/* Code Area */}
-      <div className="flex-1 overflow-x-auto p-4 font-mono scrollbar-thin scrollbar-thumb-elevated scrollbar-track-transparent">
-        <pre className="whitespace-pre text-primary-text selection:bg-accent/30" style={{ lineHeight: '21px' }}>
+      <div className="flex-1 overflow-auto p-4 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
+        <pre className="whitespace-pre selection:bg-purple-500/30" style={{ lineHeight: '21px' }}>
           {isJson ? tokens : stringified}
         </pre>
       </div>

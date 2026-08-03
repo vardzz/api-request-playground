@@ -13,29 +13,29 @@ export default function MethodSelector() {
   // Apex specific color mapping
   const getMethodColor = (method: HttpMethod) => {
     switch (method) {
-      case 'GET': return 'text-success';
-      case 'POST': return 'text-accent';
-      case 'PUT': return 'text-warning';
-      case 'DELETE': return 'text-danger';
-      case 'PATCH': return 'text-warning';
-      default: return 'text-primary-text';
+      case 'GET': return 'text-emerald-400';
+      case 'POST': return 'text-blue-400';
+      case 'PUT': return 'text-amber-400';
+      case 'DELETE': return 'text-red-400';
+      case 'PATCH': return 'text-amber-400';
+      default: return 'text-zinc-300';
     }
   };
 
   return (
-    <div className="relative group/method h-full">
+    <div className="relative group/method h-full flex items-center">
       <select
         value={state.request.method}
         onChange={(e) => dispatch({ type: 'SET_METHOD', payload: e.target.value as HttpMethod })}
-        className={`appearance-none bg-transparent ${getMethodColor(state.request.method)} font-bold text-sm h-full pl-4 pr-8 py-2 focus:outline-none cursor-pointer tracking-wide`}
+        className={`appearance-none bg-transparent ${getMethodColor(state.request.method)} font-bold text-sm h-full pl-3 pr-7 py-1.5 focus:outline-none cursor-pointer tracking-wide`}
       >
         {METHODS.map((method) => (
-          <option key={method} value={method} className="bg-elevated text-primary-text">
+          <option key={method} value={method} className="bg-zinc-900 text-zinc-200">
             {method}
           </option>
         ))}
       </select>
-      <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-muted-text group-hover/method:text-secondary-text transition-colors">x
+      <div className="absolute inset-y-0 right-1 flex items-center pointer-events-none text-zinc-500 group-hover/method:text-zinc-400 transition-colors">
         <ChevronDown size={14} />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Clock3, HardDrive } from 'lucide-react';
+import { Clock3, Database } from 'lucide-react';
 
 interface MetaBarProps {
   timeMs: number;
@@ -15,13 +15,13 @@ export default function MetaBar({ timeMs, sizeBytes }: MetaBarProps) {
   };
 
   return (
-    <div className="flex items-center gap-6 text-[13px] text-muted-text font-mono">
-      <div className="flex items-center gap-2">
-        <Clock3 size={14} className="opacity-70" />
-        <span>{timeMs} <span className="opacity-70">ms</span></span>
+    <div className="flex items-center gap-4 text-xs text-zinc-400 font-mono">
+      <div className="flex items-center gap-1">
+        <Clock3 size={12} />
+        <span>{timeMs} ms</span>
       </div>
-      <div className="flex items-center gap-2">
-        <HardDrive size={14} className="opacity-70" />
+      <div className="flex items-center gap-1">
+        <Database size={12} />
         <span>{formatSize(sizeBytes)}</span>
       </div>
     </div>

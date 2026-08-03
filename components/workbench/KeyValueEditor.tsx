@@ -32,10 +32,10 @@ export default function KeyValueEditor({
   if (items.length === 0) {
     return (
       <div className="text-center py-10 flex flex-col items-center justify-center">
-        <p className="text-sm text-muted-text mb-4">No parameters configured.</p>
+        <p className="text-sm text-zinc-500 mb-4">No parameters configured.</p>
         <button
           onClick={handleAdd}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-text bg-surface hover:bg-elevated border border-border rounded-md transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-200 bg-zinc-900/80 hover:bg-zinc-800/80 border border-zinc-800/80 rounded-lg transition-colors"
         >
           <Plus size={16} />
           Add Parameter
@@ -53,8 +53,8 @@ export default function KeyValueEditor({
             onClick={() => onUpdate({ ...item, enabled: !item.enabled })}
             className={`w-5 h-5 flex-shrink-0 rounded-[4px] border flex items-center justify-center transition-colors ${
               item.enabled 
-                ? 'bg-[#8B5CF6] border-[#8B5CF6] text-white' 
-                : 'bg-surface border-border text-transparent'
+                ? 'bg-purple-600 border-purple-600 text-white' 
+                : 'bg-zinc-900/90 border-zinc-700 text-transparent'
             }`}
           >
             <Check size={14} strokeWidth={3} />
@@ -65,7 +65,7 @@ export default function KeyValueEditor({
             value={item.key}
             onChange={(e) => onUpdate({ ...item, key: e.target.value })}
             placeholder={placeholderKey}
-            className="flex-1 bg-surface border border-transparent focus:border-border rounded-md px-3 py-2 text-[13px] text-primary-text placeholder-muted-text focus:outline-none transition-colors font-mono"
+            className="flex-1 bg-zinc-900/90 border border-zinc-800/80 text-zinc-200 text-sm rounded-lg px-3 py-2 focus:border-purple-500/50 placeholder:text-zinc-600 focus:outline-none transition-colors font-mono"
             spellCheck={false}
           />
           
@@ -74,19 +74,19 @@ export default function KeyValueEditor({
             value={item.value}
             onChange={(e) => onUpdate({ ...item, value: e.target.value })}
             placeholder={placeholderValue}
-            className="flex-1 bg-surface border border-transparent focus:border-border rounded-md px-3 py-2 text-[13px] text-primary-text placeholder-muted-text focus:outline-none transition-colors font-mono"
+            className="flex-1 bg-zinc-900/90 border border-zinc-800/80 text-zinc-200 text-sm rounded-lg px-3 py-2 focus:border-purple-500/50 placeholder:text-zinc-600 focus:outline-none transition-colors font-mono"
             spellCheck={false}
           />
           
           <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity absolute right-[-40px]">
             <button
               onClick={() => onRemove(item.id)}
-              className="p-1.5 text-muted-text hover:text-danger rounded-md transition-colors"
+              className="p-1.5 text-zinc-500 hover:text-red-400 transition-colors"
               title="Remove item"
             >
               <Trash2 size={16} />
             </button>
-            <div className="text-muted-text cursor-grab p-1.5 hover:text-secondary-text">
+            <div className="text-zinc-600 cursor-grab p-1.5 hover:text-zinc-400">
               <GripVertical size={16} />
             </div>
           </div>
@@ -96,10 +96,10 @@ export default function KeyValueEditor({
       <div className="pt-2 flex pl-8">
         <button
           onClick={handleAdd}
-          className="inline-flex items-center gap-1.5 px-2 py-1.5 text-[13px] font-medium text-secondary-text hover:text-primary-text transition-colors"
+          className="text-zinc-400 hover:text-zinc-200 text-sm flex items-center gap-1.5 mt-3 transition-colors"
         >
           <Plus size={14} />
-          Add Header
+          {placeholderKey === 'New header' ? 'Add Header' : 'Add Param'}
         </button>
       </div>
     </div>
