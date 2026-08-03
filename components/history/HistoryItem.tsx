@@ -14,21 +14,21 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
   
   // Custom status color mapping for Apex
   const getApexStatusColor = (status: number) => {
-    if (status >= 200 && status < 300) return 'text-success bg-success/10';
-    if (status >= 300 && status < 400) return 'text-[#3B82F6] bg-[#3B82F6]/10'; // Blue
-    if (status >= 400 && status < 500) return 'text-warning bg-warning/10';
-    if (status >= 500) return 'text-danger bg-danger/10';
-    return 'text-muted-text bg-elevated';
+    if (status >= 200 && status < 300) return 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20';
+    if (status >= 300 && status < 400) return 'text-blue-400 bg-blue-500/10 border border-blue-500/20';
+    if (status >= 400 && status < 500) return 'text-amber-400 bg-amber-500/10 border border-amber-500/20';
+    if (status >= 500) return 'text-red-400 bg-red-500/10 border border-red-500/20';
+    return 'text-zinc-400 bg-zinc-800 border border-zinc-700';
   };
 
   const getMethodColor = (method: string) => {
     switch (method) {
-      case 'GET': return 'text-success';
-      case 'POST': return 'text-[#3B82F6]'; // Blue
-      case 'PUT': return 'text-warning';
-      case 'DELETE': return 'text-danger';
-      case 'PATCH': return 'text-[#8B5CF6]'; // Purple
-      default: return 'text-muted-text';
+      case 'GET': return 'text-emerald-400';
+      case 'POST': return 'text-blue-400';
+      case 'PUT': return 'text-amber-400';
+      case 'PATCH': return 'text-purple-400';
+      case 'DELETE': return 'text-red-400';
+      default: return 'text-zinc-400';
     }
   };
 
@@ -42,10 +42,10 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
         e.preventDefault();
         // Context menu logic placeholder
       }}
-      className={`w-full text-left p-3 rounded-card transition-all cursor-pointer group flex flex-col gap-2 ${
+      className={`w-full text-left p-3 rounded-xl transition-all cursor-pointer group flex flex-col gap-2 ${
         selected 
-          ? 'bg-elevated border border-accent/50 shadow-sm' 
-          : 'bg-transparent border border-transparent hover:bg-elevated/50 hover:border-border hover:shadow-subtle'
+          ? 'bg-zinc-900 border border-purple-500/50 shadow-sm' 
+          : 'bg-transparent border border-transparent hover:bg-zinc-900/50 hover:border-zinc-800/80'
       }`}
     >
       <div className="flex items-center justify-between">
@@ -53,11 +53,11 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
           <span className={`text-[11px] font-bold tracking-wider ${getMethodColor(request.method)}`}>
             {request.method}
           </span>
-          <span className={`text-xs font-mono truncate ${selected ? 'text-primary-text' : 'text-secondary-text group-hover:text-primary-text transition-colors'}`} title={request.url}>
+          <span className={`text-xs font-mono truncate ${selected ? 'text-zinc-200' : 'text-zinc-400 group-hover:text-zinc-200 transition-colors'}`} title={request.url}>
             {request.url || 'Empty URL'}
           </span>
         </div>
-        <div className={`text-[10px] font-bold px-1.5 py-0.5 rounded-pill ${statusClass} flex-shrink-0`}>
+        <div className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${statusClass} flex-shrink-0`}>
           {responseSummary.status}
         </div>
       </div>

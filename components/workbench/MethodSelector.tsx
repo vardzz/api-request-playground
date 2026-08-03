@@ -16,8 +16,8 @@ export default function MethodSelector() {
       case 'GET': return 'text-emerald-400';
       case 'POST': return 'text-blue-400';
       case 'PUT': return 'text-amber-400';
+      case 'PATCH': return 'text-purple-400';
       case 'DELETE': return 'text-red-400';
-      case 'PATCH': return 'text-amber-400';
       default: return 'text-zinc-300';
     }
   };
