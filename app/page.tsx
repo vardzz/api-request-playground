@@ -39,16 +39,6 @@ export default function Home() {
 
           {/* Right: Actions */}
           <div className="flex items-center justify-end gap-3 w-[35%]">
-            <button className="hidden sm:flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-200 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
-              <Plus size={16} />
-              <span>New</span>
-            </button>
-            <button className="p-1.5 text-zinc-400 hover:text-zinc-200 transition-colors">
-              <Settings2 size={18} />
-            </button>
-            <div className="w-7 h-7 rounded-full bg-transparent border border-zinc-700 flex items-center justify-center text-xs font-medium text-zinc-200 cursor-pointer hover:border-zinc-500 transition-colors">
-              U
-            </div>
           </div>
         </header>
 
