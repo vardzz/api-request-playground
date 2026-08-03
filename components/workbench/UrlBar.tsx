@@ -8,16 +8,17 @@ export default function UrlBar() {
   const dispatch = useRequestDispatch();
 
   return (
-    <div className="flex-1 flex relative items-center bg-transparent group">
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-text group-focus-within:text-accent transition-colors">
+    <div className="flex-1 flex items-center h-full relative group/url">
+      <div className="pl-3 pr-2 text-muted-text group-focus-within/url:text-primary-text transition-colors">
         <Globe size={16} />
       </div>
       <input
-        type="url"
+        type="text"
         value={state.request.url}
         onChange={(e) => dispatch({ type: 'SET_URL', payload: e.target.value })}
         placeholder="https://api.example.com/v1/users"
-        className="block w-full pl-10 pr-4 py-2.5 text-sm bg-transparent text-primary-text focus:outline-none font-mono placeholder-muted-text transition-all"
+        className="flex-1 h-full bg-transparent border-none text-primary-text text-[13px] placeholder-muted-text focus:outline-none focus:ring-0 font-mono tracking-tight"
+        spellCheck={false}
       />
     </div>
   );

@@ -31,11 +31,11 @@ export default function KeyValueEditor({
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-10 bg-surface/30 rounded-card border border-dashed border-border flex flex-col items-center justify-center">
+      <div className="text-center py-10 flex flex-col items-center justify-center">
         <p className="text-sm text-muted-text mb-4">No parameters configured.</p>
         <button
           onClick={handleAdd}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-text bg-elevated hover:bg-elevated/80 border border-border rounded-button transition-colors click-scale shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-text bg-surface hover:bg-elevated border border-border rounded-md transition-colors"
         >
           <Plus size={16} />
           Add Parameter
@@ -47,20 +47,17 @@ export default function KeyValueEditor({
   return (
     <div className="space-y-3">
       {items.map((item) => (
-        <div key={item.id} className="flex items-center gap-3 group bg-surface/50 p-1.5 rounded-card border border-transparent hover:border-border transition-colors">
-          <div className="text-muted-text opacity-0 group-hover:opacity-50 hover:opacity-100 cursor-grab px-1">
-            <GripVertical size={14} />
-          </div>
+        <div key={item.id} className="flex items-center gap-3 group relative">
           
           <button
             onClick={() => onUpdate({ ...item, enabled: !item.enabled })}
-            className={`w-5 h-5 flex-shrink-0 rounded-md border flex items-center justify-center transition-colors ${
+            className={`w-5 h-5 flex-shrink-0 rounded-[4px] border flex items-center justify-center transition-colors ${
               item.enabled 
-                ? 'bg-accent border-accent text-primary-text' 
-                : 'bg-elevated border-border text-transparent'
+                ? 'bg-[#8B5CF6] border-[#8B5CF6] text-white' 
+                : 'bg-surface border-border text-transparent'
             }`}
           >
-            <Check size={12} strokeWidth={3} />
+            <Check size={14} strokeWidth={3} />
           </button>
           
           <input
@@ -68,7 +65,7 @@ export default function KeyValueEditor({
             value={item.key}
             onChange={(e) => onUpdate({ ...item, key: e.target.value })}
             placeholder={placeholderKey}
-            className="flex-1 bg-elevated border border-border focus:border-accent/50 rounded-input px-3 py-2 text-sm text-primary-text placeholder-muted-text focus:outline-none focus:ring-1 focus:ring-accent/50 transition-colors font-mono shadow-sm"
+            className="flex-1 bg-surface border border-transparent focus:border-border rounded-md px-3 py-2 text-[13px] text-primary-text placeholder-muted-text focus:outline-none transition-colors font-mono"
             spellCheck={false}
           />
           
@@ -77,27 +74,32 @@ export default function KeyValueEditor({
             value={item.value}
             onChange={(e) => onUpdate({ ...item, value: e.target.value })}
             placeholder={placeholderValue}
-            className="flex-1 bg-elevated border border-border focus:border-accent/50 rounded-input px-3 py-2 text-sm text-primary-text placeholder-muted-text focus:outline-none focus:ring-1 focus:ring-accent/50 transition-colors font-mono shadow-sm"
+            className="flex-1 bg-surface border border-transparent focus:border-border rounded-md px-3 py-2 text-[13px] text-primary-text placeholder-muted-text focus:outline-none transition-colors font-mono"
             spellCheck={false}
           />
           
-          <button
-            onClick={() => onRemove(item.id)}
-            className="p-2 text-muted-text hover:text-danger hover:bg-danger/10 rounded-button transition-colors opacity-0 group-hover:opacity-100"
-            title="Remove item"
-          >
-            <Trash2 size={16} />
-          </button>
+          <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity absolute right-[-40px]">
+            <button
+              onClick={() => onRemove(item.id)}
+              className="p-1.5 text-muted-text hover:text-danger rounded-md transition-colors"
+              title="Remove item"
+            >
+              <Trash2 size={16} />
+            </button>
+            <div className="text-muted-text cursor-grab p-1.5 hover:text-secondary-text">
+              <GripVertical size={16} />
+            </div>
+          </div>
         </div>
       ))}
       
-      <div className="pt-2 px-7">
+      <div className="pt-2 flex pl-8">
         <button
           onClick={handleAdd}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-muted-text hover:text-primary-text hover:bg-elevated rounded-button transition-colors click-scale border border-transparent hover:border-border"
+          className="inline-flex items-center gap-1.5 px-2 py-1.5 text-[13px] font-medium text-secondary-text hover:text-primary-text transition-colors"
         >
           <Plus size={14} />
-          Add Row
+          Add Header
         </button>
       </div>
     </div>

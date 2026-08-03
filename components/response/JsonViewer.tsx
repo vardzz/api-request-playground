@@ -46,14 +46,14 @@ export default function JsonViewer({ data }: JsonViewerProps) {
         let cls = 'text-warning'; // number
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
-            cls = 'text-accent font-medium'; // key
+            cls = 'text-[#3B82F6]'; // key (blue)
           } else {
-            cls = 'text-success'; // string
+            cls = 'text-[#22c55e]'; // string (green)
           }
         } else if (/true|false/.test(match)) {
-          cls = 'text-[#8B5CF6] font-medium'; // boolean (purple)
+          cls = 'text-[#8B5CF6]'; // boolean (purple)
         } else if (/null/.test(match)) {
-          cls = 'text-danger font-medium'; // null (red)
+          cls = 'text-danger'; // null (red)
         }
         
         parsedTokens.push(<span key={offset} className={cls}>{match}</span>);

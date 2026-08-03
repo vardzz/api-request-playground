@@ -3,12 +3,12 @@
 import { useHistory } from '../../hooks/useHistory';
 import { useRequestDispatch } from '../../context/RequestContext';
 import HistoryItem from './HistoryItem';
-import { Clock3, Trash2, FolderKanban } from 'lucide-react';
+import { Clock, Folder, Settings, ChevronsLeft } from 'lucide-react';
 import { useState } from 'react';
 import { HistoryEntry } from '../../types';
 
 export default function HistorySidebar() {
-  const { history, clearHistory } = useHistory();
+  const { history } = useHistory();
   const dispatch = useRequestDispatch();
   const [activeTab, setActiveTab] = useState<'history' | 'collections'>('history');
 
@@ -37,54 +37,44 @@ export default function HistorySidebar() {
   const groupedHistory = groupHistory(history);
 
   return (
-    <div className="flex flex-col bg-surface w-full h-full flex-shrink-0 z-10 border-r border-border">
+    <div className="flex flex-col bg-background w-full h-full flex-shrink-0 z-10 border-none relative">
       {/* Tabs */}
-      <div className="flex items-center p-2 gap-1 border-b border-border bg-surface/50 backdrop-blur-sm">
+      <div className="flex items-center px-4 pt-4 border-b border-border">
         <button 
           onClick={() => setActiveTab('history')}
-          className={`flex-1 flex items-center justify-center gap-2 py-1.5 text-xs font-medium rounded-input transition-colors ${activeTab === 'history' ? 'bg-elevated text-primary-text shadow-sm' : 'text-muted-text hover:text-secondary-text hover:bg-elevated/50'}`}
+          className={`flex items-center justify-center gap-2 py-3 px-2 text-sm font-medium transition-colors border-b-2 ${activeTab === 'history' ? 'border-[#8B5CF6] text-primary-text' : 'border-transparent text-secondary-text hover:text-primary-text'}`}
         >
-          <Clock3 size={14} /> History
+          <Clock size={16} className={activeTab === 'history' ? 'text-[#8B5CF6]' : 'text-secondary-text'} /> History
         </button>
+        <div className="w-4" />
         <button 
           onClick={() => setActiveTab('collections')}
-          className={`flex-1 flex items-center justify-center gap-2 py-1.5 text-xs font-medium rounded-input transition-colors ${activeTab === 'collections' ? 'bg-elevated text-primary-text shadow-sm' : 'text-muted-text hover:text-secondary-text hover:bg-elevated/50'}`}
+          className={`flex items-center justify-center gap-2 py-3 px-2 text-sm font-medium transition-colors border-b-2 ${activeTab === 'collections' ? 'border-[#8B5CF6] text-primary-text' : 'border-transparent text-secondary-text hover:text-primary-text'}`}
         >
-          <FolderKanban size={14} /> Collections
+          <Folder size={16} className={activeTab === 'collections' ? 'text-[#8B5CF6]' : 'text-secondary-text'} /> Collections
         </button>
       </div>
 
       {/* Header Actions */}
       {activeTab === 'history' && (
-        <div className="px-4 py-3 flex items-center justify-between">
-          <span className="text-xs font-semibold text-secondary-text uppercase tracking-wider">Recent Requests</span>
-          {history.length > 0 && (
-            <button
-              onClick={clearHistory}
-              className="p-1.5 text-muted-text hover:text-danger hover:bg-danger/10 rounded-button transition-colors click-scale"
-              title="Clear history"
-            >
-              <Trash2 size={14} />
-            </button>
-          )}
+        <div className="px-5 py-4 flex items-center justify-between">
+          <span className="text-xs font-semibold text-secondary-text uppercase tracking-wider">RECENT REQUESTS</span>
         </div>
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-4">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-4 mb-12">
         {activeTab === 'history' ? (
           history.length === 0 ? (
-            <div className="p-6 text-center text-sm text-muted-text flex flex-col items-center gap-3 mt-10">
-              <div className="w-12 h-12 rounded-full bg-elevated flex items-center justify-center">
-                <Clock3 size={20} className="opacity-50" />
-              </div>
+            <div className="p-6 text-center text-sm text-secondary-text flex flex-col items-center gap-3 mt-20">
+              <Clock size={24} className="text-muted-text" />
               <p>No requests yet.<br/>Send a request to see it here.</p>
             </div>
           ) : (
             Object.entries(groupedHistory).map(([group, items]) => (
               items.length > 0 && (
                 <div key={group} className="flex flex-col gap-1.5">
-                  <h3 className="px-2 text-[10px] font-bold text-muted-text uppercase tracking-wider">{group}</h3>
+                  <h3 className="px-3 text-[10px] font-bold text-muted-text uppercase tracking-wider">{group}</h3>
                   <div className="flex flex-col gap-1">
                     {items.map((entry) => (
                       <HistoryItem 
@@ -99,13 +89,21 @@ export default function HistorySidebar() {
             ))
           )
         ) : (
-          <div className="p-6 text-center text-sm text-muted-text flex flex-col items-center gap-3 mt-10">
-            <div className="w-12 h-12 rounded-full bg-elevated flex items-center justify-center">
-              <FolderKanban size={20} className="opacity-50" />
-            </div>
+          <div className="p-6 text-center text-sm text-secondary-text flex flex-col items-center gap-3 mt-20">
+            <Folder size={24} className="text-muted-text" />
             <p>Collections coming soon.</p>
           </div>
         )}
+      </div>
+
+      {/* Footer Settings */}
+      <div className="absolute bottom-0 left-0 w-full p-4 border-t border-border bg-background flex items-center justify-between text-secondary-text">
+        <button className="hover:text-primary-text transition-colors">
+          <Settings size={18} />
+        </button>
+        <button className="hover:text-primary-text transition-colors">
+          <ChevronsLeft size={18} />
+        </button>
       </div>
     </div>
   );

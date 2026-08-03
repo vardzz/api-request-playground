@@ -1,99 +1,77 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useRequestState, useRequestDispatch } from '../../context/RequestContext';
 import MethodSelector from './MethodSelector';
 import UrlBar from './UrlBar';
 import KeyValueEditor from './KeyValueEditor';
 import BodyEditor from './BodyEditor';
-import { useRequestState, useRequestDispatch } from '../../context/RequestContext';
-import { useSendRequest } from '../../hooks/useSendRequest';
+import { Play, Save, Settings2 } from 'lucide-react';
 import { KeyValuePair } from '../../types';
-import { Send, Settings2, Loader2, Save } from 'lucide-react';
 
 export default function RequestWorkbench() {
   const state = useRequestState();
   const dispatch = useRequestDispatch();
-  const { sendRequest } = useSendRequest();
-  const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'auth' | 'body' | 'cookies'>('params');
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-        e.preventDefault();
-        if (!state.isLoading) {
-          sendRequest();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [sendRequest, state.isLoading]);
+  const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'auth' | 'body' | 'cookies'>('headers');
 
   return (
-    <div className="flex flex-col bg-background rounded-card shadow-subtle border border-border overflow-hidden h-full m-3">
-      {/* Top Bar: Method & URL */}
-      <div className="p-3 border-b border-border bg-surface/80 flex items-center gap-3 backdrop-blur-md">
-        <div className="flex-1 flex items-center bg-elevated border border-border rounded-input p-1 focus-within:border-accent/50 focus-within:ring-1 focus-within:ring-accent/50 transition-all shadow-sm">
+    <div className="flex flex-col h-full bg-background relative border-none">
+      
+      {/* Top Toolbar */}
+      <div className="p-4 flex items-center gap-3">
+        <div className="flex-1 flex items-center bg-surface border border-border rounded-md shadow-sm h-[42px]">
           <MethodSelector />
-          <div className="w-px h-6 bg-border mx-1" />
+          <div className="w-px h-6 bg-border" />
           <UrlBar />
         </div>
-        <button
-          className="flex items-center justify-center p-2.5 text-muted-text hover:text-primary-text bg-elevated border border-border hover:border-border/80 rounded-button transition-colors click-scale shadow-sm"
-          title="Save Request (Ctrl + S)"
+        
+        <button 
+          className="w-[42px] h-[42px] flex items-center justify-center bg-surface hover:bg-elevated border border-border rounded-md text-secondary-text transition-colors click-scale flex-shrink-0"
+          title="Save Request"
         >
           <Save size={18} />
         </button>
-        <button
-          onClick={sendRequest}
-          className="flex items-center justify-center gap-2 px-6 py-2.5 bg-accent hover:bg-accent/90 text-primary-text text-sm font-medium rounded-button shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors click-scale relative overflow-hidden group"
+        
+        <button 
+          onClick={() => dispatch({ type: 'SEND_REQUEST' })}
           disabled={state.isLoading}
-          title="Send Request (Ctrl + Enter)"
+          className="h-[42px] flex items-center justify-center gap-2 px-6 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-md font-medium transition-colors click-scale disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
         >
-          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-          <span className="relative z-10 flex items-center gap-2">
-            {state.isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
-            <span className="hidden sm:inline font-semibold tracking-wide">{state.isLoading ? 'Sending' : 'Send'}</span>
-          </span>
+          <Play size={16} className={state.isLoading ? 'animate-pulse' : 'ml-0.5'} fill="currentColor" />
+          <span>Send</span>
         </button>
       </div>
 
-      {/* Tabs (Segmented Controls) */}
-      <div className="px-4 py-3 border-b border-border bg-surface">
-        <div className="flex bg-elevated p-1 rounded-card border border-border shadow-sm inline-flex">
-          {[
-            { id: 'params', label: 'Params', count: state.request.params.filter(p => p.key).length },
-            { id: 'headers', label: 'Headers', count: state.request.headers.filter(h => h.key).length },
-            { id: 'auth', label: 'Authorization', count: 0 },
-            { id: 'body', label: 'Body', indicator: state.request.body.length > 0 },
-            { id: 'cookies', label: 'Cookies', count: 0 },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-1.5 text-xs font-medium rounded-input transition-all flex items-center gap-2 ${
-                activeTab === tab.id
-                  ? 'bg-surface text-primary-text shadow-sm'
-                  : 'text-muted-text hover:text-secondary-text hover:bg-surface/50'
-              }`}
-            >
-              {tab.label}
-              {tab.count ? (
-                <span className={`px-1.5 py-0.5 text-[10px] rounded-pill font-mono ${activeTab === tab.id ? 'bg-accent/20 text-accent' : 'bg-background border border-border text-muted-text'}`}>
-                  {tab.count}
-                </span>
-              ) : null}
-              {tab.indicator && (
-                <span className={`w-1.5 h-1.5 rounded-full ${state.request.bodyIsValidJson ? 'bg-success' : 'bg-danger'}`} />
-              )}
-            </button>
-          ))}
-        </div>
+      {/* Tabs */}
+      <div className="flex items-center px-4 pt-2 border-b border-border">
+        {[
+          { id: 'params', label: 'Params', count: state.request.params.filter(p => p.key).length },
+          { id: 'headers', label: 'Headers', count: state.request.headers.filter(h => h.key).length },
+          { id: 'auth', label: 'Authorization', count: 0 },
+          { id: 'body', label: 'Body', count: 0 },
+          { id: 'cookies', label: 'Cookies', count: 0 }
+        ].map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as any)}
+            className={`px-4 py-3 text-[13px] font-medium transition-colors border-b-2 flex items-center gap-2 ${
+              activeTab === tab.id
+                ? 'border-[#8B5CF6] text-primary-text'
+                : 'border-transparent text-secondary-text hover:text-primary-text'
+            }`}
+          >
+            {tab.label}
+            {tab.count > 0 && (
+              <span className={`px-1.5 py-0.5 text-[10px] rounded-md font-mono ${activeTab === tab.id ? 'bg-surface border border-border text-primary-text' : 'bg-surface border border-transparent text-secondary-text'}`}>
+                {tab.count}
+              </span>
+            )}
+          </button>
+        ))}
       </div>
 
       {/* Content Area */}
-      <div className="p-4 bg-background flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto p-4 bg-background">
         {activeTab === 'params' && (
           <div className="space-y-4 max-w-4xl">
             <KeyValueEditor
@@ -122,7 +100,7 @@ export default function RequestWorkbench() {
 
         {activeTab === 'body' && (
           <div className="h-full flex flex-col">
-            <div className="flex-1 min-h-[300px] border border-border rounded-card overflow-hidden">
+            <div className="flex-1 min-h-[300px]">
               <BodyEditor />
             </div>
             <p className="text-xs text-muted-text mt-3 text-center">
