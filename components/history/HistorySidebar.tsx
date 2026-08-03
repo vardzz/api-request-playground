@@ -7,6 +7,8 @@ import { Clock, Folder, Settings, ChevronsLeft } from 'lucide-react';
 import { useState } from 'react';
 import { HistoryEntry } from '../../types';
 
+import { storage } from '../../lib/storage';
+
 export default function HistorySidebar() {
   const { history } = useHistory();
   const dispatch = useRequestDispatch();
@@ -85,6 +87,7 @@ export default function HistorySidebar() {
                         onClick={() => dispatch({ type: 'LOAD_FROM_HISTORY', payload: entry })}
                         onDelete={() => {
                           const newHistory = history.filter(h => h.id !== entry.id);
+                          storage.set('api_playground_history', newHistory);
                           dispatch({ type: 'SET_HISTORY', payload: newHistory });
                         }}
                       />
