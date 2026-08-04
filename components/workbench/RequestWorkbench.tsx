@@ -21,7 +21,7 @@ export default function RequestWorkbench() {
       
       {/* Top Toolbar */}
       <div className="p-4 flex items-center gap-3">
-        <div className="flex-1 flex items-center bg-[#0F1115] border border-[#F4F1EA]/20 rounded-xl p-1 h-12 shadow-sm">
+        <div className="flex-1 flex items-center bg-[#0F1115] border border-[#F4F1EA]/20 rounded-xl p-1 h-12 shadow-sm min-w-0">
           <MethodSelector />
           <div className="w-px h-6 bg-[#F4F1EA]/20 mx-2" />
           <UrlBar />
