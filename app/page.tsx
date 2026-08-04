@@ -33,15 +33,6 @@ export default function Home() {
           
           {/* Left: Branding */}
           <div className="flex items-center gap-3 flex-1">
-            {!isSidebarOpen && (
-              <button 
-                onClick={() => setIsSidebarOpen(true)}
-                className="p-1.5 hover:bg-[#F4F1EA]/10 rounded-md transition-colors text-[#F4F1EA]/70 hover:text-[#F4F1EA] -ml-1"
-                title="Open Sidebar"
-              >
-                <PanelLeft size={18} />
-              </button>
-            )}
             <div className="relative w-8 h-8 flex items-center justify-center">
               <Image src={apexLogo} alt="Apex Logo" fill className="object-contain" />
             </div>
@@ -78,18 +69,29 @@ export default function Home() {
         <div className="flex flex-1 overflow-hidden flex-col md:flex-row bg-[#0F1115]">
           {/* History Sidebar */}
           <div 
-            className="hidden md:flex flex-col h-full border-[#F4F1EA]/20 bg-[#0F1115] transition-all duration-300 ease-in-out" 
+            className="hidden md:flex flex-col h-full border-[#F4F1EA]/20 bg-[#0F1115] transition-all duration-300 ease-in-out relative" 
             style={{ 
-              width: isSidebarOpen ? '22%' : '0%',
-              minWidth: isSidebarOpen ? '250px' : '0px',
-              borderRightWidth: isSidebarOpen ? '1px' : '0px',
-              opacity: isSidebarOpen ? 1 : 0,
+              width: isSidebarOpen ? '22%' : '48px',
+              minWidth: isSidebarOpen ? '250px' : '48px',
+              borderRightWidth: '1px',
               overflow: 'hidden'
             }}
           >
-            <div className="w-[22vw] min-w-[250px] h-full">
+            <div className={`w-[22vw] min-w-[250px] h-full transition-opacity duration-200 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
               <HistorySidebar searchQuery={searchQuery} onClose={() => setIsSidebarOpen(false)} />
             </div>
+            
+            {!isSidebarOpen && (
+              <div className="absolute top-0 left-0 w-[48px] h-full flex flex-col items-center pt-4">
+                <button 
+                  onClick={() => setIsSidebarOpen(true)}
+                  className="p-1.5 hover:bg-[#F4F1EA]/10 rounded-md transition-colors text-[#F4F1EA]/70 hover:text-[#F4F1EA]"
+                  title="Open Sidebar"
+                >
+                  <PanelLeft size={18} />
+                </button>
+              </div>
+            )}
           </div>
           
           <main className="flex-1 flex overflow-hidden">
