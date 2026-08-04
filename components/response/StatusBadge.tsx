@@ -1,4 +1,3 @@
-import { getStatusColorClass } from '../../lib/http-utils';
 
 interface StatusBadgeProps {
   status: number;
@@ -6,11 +5,11 @@ interface StatusBadgeProps {
 }
 
 export default function StatusBadge({ status, statusText }: StatusBadgeProps) {
-  const getApexStatusColor = (status: number) => {
+  const getApexStatusColor = () => {
     return 'text-[#F4F1EA] bg-[#0F1115] border border-[#F4F1EA]/20';
   };
 
-  const statusClass = getApexStatusColor(status);
+  const statusClass = getApexStatusColor();
 
   return (
     <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md ${statusClass} font-mono tracking-tight`}>

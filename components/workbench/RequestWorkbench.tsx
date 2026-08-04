@@ -6,7 +6,7 @@ import MethodSelector from './MethodSelector';
 import UrlBar from './UrlBar';
 import KeyValueEditor from './KeyValueEditor';
 import BodyEditor from './BodyEditor';
-import { Play, Save, Settings2, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { KeyValuePair } from '../../types';
 import { useSendRequest } from '../../hooks/useSendRequest';
 
@@ -46,7 +46,7 @@ export default function RequestWorkbench() {
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
+            onClick={() => setActiveTab(tab.id as 'params' | 'headers' | 'body')}
             className={`px-3 py-2 text-sm transition-colors border-b-2 -mb-[1px] flex items-center gap-2 ${
               activeTab === tab.id
                 ? 'border-[#F4F1EA] text-[#F4F1EA] font-medium'

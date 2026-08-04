@@ -1,7 +1,5 @@
 import { HistoryEntry } from '../../types';
-import { getStatusColorClass } from '../../lib/http-utils';
 import { Clock3, Trash2 } from 'lucide-react';
-
 interface HistoryItemProps {
   entry: HistoryEntry;
   onClick: () => void;
@@ -12,7 +10,7 @@ interface HistoryItemProps {
 export default function HistoryItem({ entry, onClick, onDelete, selected }: HistoryItemProps) {
   const { request, responseSummary, timestamp } = entry;
   
-  const getApexStatusColor = (status: number) => {
+  const getApexStatusColor = () => {
     return 'text-[#F4F1EA] bg-[#0F1115] border border-[#F4F1EA]/20';
   };
 
@@ -28,7 +26,7 @@ export default function HistoryItem({ entry, onClick, onDelete, selected }: Hist
   };
 
   const formattedTime = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  const statusClass = getApexStatusColor(responseSummary.status);
+  const statusClass = getApexStatusColor();
 
   return (
     <div 

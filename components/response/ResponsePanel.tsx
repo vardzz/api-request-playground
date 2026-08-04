@@ -31,7 +31,7 @@ export default function ResponsePanel() {
         </div>
         <h2 className="text-xl font-heading font-semibold text-[#F4F1EA] mb-2 tracking-tight">Ready to send</h2>
         <p className="text-sm text-[#F4F1EA]/50 max-w-xs text-center leading-relaxed">
-          Enter an API endpoint and click Send to inspect the server's response right here.
+          Enter an API endpoint and click Send to inspect the server&apos;s response right here.
         </p>
       </div>
     );
@@ -74,7 +74,7 @@ export default function ResponsePanel() {
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
+            onClick={() => setActiveTab(tab.id as 'body' | 'headers')}
             className={`px-3 py-2 text-sm transition-colors border-b-2 -mb-[1px] flex items-center gap-2 ${
               activeTab === tab.id
                 ? 'border-[#F4F1EA] text-[#F4F1EA] font-medium'

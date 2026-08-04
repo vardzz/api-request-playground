@@ -4,7 +4,7 @@ import { RequestProvider } from '../context/RequestContext';
 import RequestWorkbench from '../components/workbench/RequestWorkbench';
 import ResponsePanel from '../components/response/ResponsePanel';
 import HistorySidebar from '../components/history/HistorySidebar';
-import { PanelLeftClose, PanelLeft } from 'lucide-react';
+import { PanelLeft } from 'lucide-react';
 import { useState } from 'react';
 import GlobalSearch from '../components/search/GlobalSearch';
 import Image from 'next/image';
