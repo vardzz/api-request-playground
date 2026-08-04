@@ -104,7 +104,7 @@ export default function GlobalSearch() {
                             entry.responseSummary.status >= 200 && entry.responseSummary.status < 300 ? 'bg-green-500' : 
                             entry.responseSummary.status >= 400 ? 'bg-red-500' : 'bg-yellow-500'
                           }`} />
-                          {entry.responseSummary.status} {entry.responseSummary.statusText}
+                          {entry.responseSummary.status}
                         </span>
                       )}
                     </div>
