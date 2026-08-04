@@ -86,9 +86,9 @@ export default function GlobalSearch() {
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                        entry.request.method === 'GET' ? 'text-blue-400 bg-blue-400/10' :
-                        entry.request.method === 'POST' ? 'text-green-400 bg-green-400/10' :
-                        entry.request.method === 'PUT' ? 'text-yellow-400 bg-yellow-400/10' :
+                        entry.request.method === 'GET' ? 'text-emerald-400 bg-emerald-400/10' :
+                        entry.request.method === 'POST' ? 'text-blue-400 bg-blue-400/10' :
+                        entry.request.method === 'PUT' ? 'text-amber-400 bg-amber-400/10' :
                         entry.request.method === 'DELETE' ? 'text-red-400 bg-red-400/10' :
                         'text-purple-400 bg-purple-400/10'
                       }`}>
