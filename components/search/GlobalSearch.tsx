@@ -60,11 +60,13 @@ export default function GlobalSearch() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
-          className="w-full bg-[#0F1115] border border-[#F4F1EA]/20 rounded-lg py-1.5 pl-9 pr-14 text-sm text-[#F4F1EA] placeholder:text-[#F4F1EA]/50 focus:outline-none focus:border-[#F4F1EA] transition-all"
+          onBlur={() => {
+            // Delay hiding dropdown so clicks on items register
+            setTimeout(() => setIsFocused(false), 200);
+          }}
+          className="w-full bg-[#0F1115] border border-[#F4F1EA]/20 rounded-lg py-1.5 pl-9 pr-4 text-sm text-[#F4F1EA] placeholder:text-[#F4F1EA]/50 focus:outline-none focus:border-[#F4F1EA] transition-all font-mono"
+          spellCheck={false}
         />
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-          <span className="text-xs font-mono text-[#F4F1EA] bg-[#0F1115] border border-[#F4F1EA]/20 rounded px-1.5 py-0.5 pointer-events-none">Ctrl K</span>
-        </div>
 
         {/* Dropdown */}
         {isFocused && searchQuery.trim().length > 0 && (
