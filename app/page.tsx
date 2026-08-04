@@ -4,26 +4,14 @@ import { RequestProvider } from '../context/RequestContext';
 import RequestWorkbench from '../components/workbench/RequestWorkbench';
 import ResponsePanel from '../components/response/ResponsePanel';
 import HistorySidebar from '../components/history/HistorySidebar';
-import { Search, PanelLeftClose, PanelLeft } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { PanelLeftClose, PanelLeft } from 'lucide-react';
+import { useState } from 'react';
+import GlobalSearch from '../components/search/GlobalSearch';
 import Image from 'next/image';
 import apexLogo from './logo.png';
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        searchInputRef.current?.focus();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   return (
     <RequestProvider>
@@ -43,22 +31,7 @@ export default function Home() {
           </div>
 
           {/* Center: Global Search */}
-          <div className="w-full max-w-[500px] px-4">
-            <div className="relative group">
-              <Search className="absolute left-7 top-1/2 -translate-y-1/2 text-[#F4F1EA]/50" size={16} />
-              <input 
-                ref={searchInputRef}
-                type="text" 
-                placeholder="Search requests..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#0F1115] border border-[#F4F1EA]/20 rounded-lg py-1.5 pl-10 pr-14 text-sm text-[#F4F1EA] placeholder:text-[#F4F1EA]/50 focus:outline-none focus:border-[#F4F1EA] transition-all"
-              />
-              <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                <span className="text-xs font-mono text-[#F4F1EA] bg-[#0F1115] border border-[#F4F1EA]/20 rounded px-1.5 py-0.5">Ctrl K</span>
-              </div>
-            </div>
-          </div>
+          <GlobalSearch />
 
           {/* Right: Actions */}
           <div className="flex items-center justify-end gap-3 flex-1">
@@ -78,7 +51,7 @@ export default function Home() {
             }}
           >
             <div className={`w-[22vw] min-w-[250px] h-full transition-opacity duration-200 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-              <HistorySidebar searchQuery={searchQuery} onClose={() => setIsSidebarOpen(false)} />
+              <HistorySidebar onClose={() => setIsSidebarOpen(false)} />
             </div>
             
             {!isSidebarOpen && (
