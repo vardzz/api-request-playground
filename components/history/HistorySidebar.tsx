@@ -3,15 +3,16 @@
 import { useHistory } from '../../hooks/useHistory';
 import { useRequestDispatch } from '../../context/RequestContext';
 import HistoryItem from './HistoryItem';
-import { Clock } from 'lucide-react';
+import { Clock, PanelLeftClose } from 'lucide-react';
 import { HistoryEntry } from '../../types';
 import { storage } from '../../lib/storage';
 
 interface HistorySidebarProps {
   searchQuery?: string;
+  onClose?: () => void;
 }
 
-export default function HistorySidebar({ searchQuery = '' }: HistorySidebarProps) {
+export default function HistorySidebar({ searchQuery = '', onClose }: HistorySidebarProps) {
   const { history } = useHistory();
   const dispatch = useRequestDispatch();
 
@@ -59,10 +60,19 @@ export default function HistorySidebar({ searchQuery = '' }: HistorySidebarProps
   return (
     <div className="flex flex-col bg-transparent w-full h-full flex-shrink-0 z-10 border-none relative">
       {/* Header */}
-      <div className="flex items-center px-4 pt-4 border-b border-[#F4F1EA]/20">
+      <div className="flex items-center justify-between px-4 pt-4 border-b border-[#F4F1EA]/20">
         <div className="flex items-center justify-center gap-2 py-2 px-2 text-[13px] font-medium border-b-2 -mb-[1px] border-[#F4F1EA] text-[#F4F1EA]">
           <Clock size={16} /> History
         </div>
+        {onClose && (
+          <button 
+            onClick={onClose}
+            className="p-1.5 hover:bg-[#F4F1EA]/10 rounded-md transition-colors text-[#F4F1EA]/70 hover:text-[#F4F1EA] mb-1"
+            title="Close Sidebar"
+          >
+            <PanelLeftClose size={16} />
+          </button>
+        )}
       </div>
 
       <div className="px-3 py-2 flex items-center justify-between mt-2">
