@@ -22,7 +22,7 @@ export default function UrlBar() {
         <Globe size={16} />
       </div>
       
-      <div className="flex-1 h-full overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-[#F4F1EA]/10 scrollbar-track-transparent flex items-center">
+      <div className="flex-1 h-full overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] flex items-center">
         <div className="min-w-full relative h-full flex items-center">
           {/* Invisible span forces the container width to match the text length so it can scroll */}
           <span className="invisible whitespace-nowrap font-mono text-sm tracking-tight pr-4" aria-hidden="true">
