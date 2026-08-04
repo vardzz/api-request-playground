@@ -3,7 +3,7 @@
 import { useHistory } from '../../hooks/useHistory';
 import { useRequestDispatch } from '../../context/RequestContext';
 import HistoryItem from './HistoryItem';
-import { Clock, PanelLeftClose } from 'lucide-react';
+import { Clock, PanelLeftClose, Send } from 'lucide-react';
 import { HistoryEntry } from '../../types';
 import { storage } from '../../lib/storage';
 
@@ -64,11 +64,14 @@ export default function HistorySidebar({ onClose }: HistorySidebarProps) {
       {/* Content */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-[#F4F1EA]/10 scrollbar-track-transparent">
         {history.length === 0 ? (
-          <div className="p-6 text-center text-sm text-[#F4F1EA]/50 font-medium flex flex-col items-center gap-3 mt-20">
-            <div className="text-[#F4F1EA]/30 bg-[#F4F1EA]/5 p-3 rounded-full">
-              <Clock size={24} strokeWidth={1.5} />
+          <div className="p-6 text-center text-sm text-[#F4F1EA]/50 flex flex-col items-center gap-3 mt-20">
+            <div className="text-[#F4F1EA]/30 bg-[#F4F1EA]/5 p-4 rounded-full border border-[#F4F1EA]/10 mb-2">
+              <Send size={24} strokeWidth={1.5} className="ml-1" />
             </div>
-            <p>No request history yet</p>
+            <h3 className="text-[#F4F1EA] font-semibold text-base">No history yet</h3>
+            <p className="max-w-[180px] text-xs leading-relaxed text-[#F4F1EA]/40">
+              Enter a URL and send a request to start building your history.
+            </p>
           </div>
         ) : (
           <div className="flex flex-col gap-6 p-4">

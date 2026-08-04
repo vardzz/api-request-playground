@@ -6,7 +6,7 @@ import StatusBadge from './StatusBadge';
 import MetaBar from './MetaBar';
 import JsonViewer from './JsonViewer';
 import HeadersInspector from './HeadersInspector';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, Send } from 'lucide-react';
 
 export default function ResponsePanel() {
   const state = useRequestState();
@@ -25,10 +25,13 @@ export default function ResponsePanel() {
 
   if (!response) {
     return (
-      <div className="flex flex-col items-center justify-center h-full bg-transparent border-none">
-        <h2 className="text-xl font-heading font-semibold text-zinc-100 mb-2 tracking-tight">No Response Yet</h2>
-        <p className="text-sm text-zinc-400 max-w-xs text-center">
-          Send your first request to inspect the server response.
+      <div className="flex flex-col items-center justify-center h-full bg-transparent border-none p-6">
+        <div className="w-20 h-20 rounded-full bg-[#F4F1EA]/5 border border-[#F4F1EA]/10 flex items-center justify-center mb-6">
+          <Send size={32} className="text-[#F4F1EA]/40 ml-1" />
+        </div>
+        <h2 className="text-xl font-heading font-semibold text-[#F4F1EA] mb-2 tracking-tight">Ready to send</h2>
+        <p className="text-sm text-[#F4F1EA]/50 max-w-xs text-center leading-relaxed">
+          Enter an API endpoint and click Send to inspect the server's response right here.
         </p>
       </div>
     );
